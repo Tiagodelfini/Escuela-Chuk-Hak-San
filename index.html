@@ -1,13 +1,146 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pagina de Tiago</title>
+    <title>Taekwondo Club</title>
+    <!-- Enlace al archivo CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>¡Hola! Si ves esto con color, el CSS funciona.</h1>
+
+    <!-- Cabecera de la página con el Menú de Navegación Ampliado -->
+    <header>
+        <div class="logo">
+            <h2>Taekwondo Club</h2>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#sedes">Sedes y Ubicación</a></li>
+                <li><a href="#horarios">Horarios</a></li>
+                <li><a href="#examenes">Exámenes</a></li>
+                <li><a href="#maestros">Maestros y Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main>
+        <!-- Sección de Bienvenida -->
+        <section id="inicio" class="hero">
+            <h1>Bienvenidos al Dojang</h1>
+            <p>Disciplina, respeto y superación personal a través del Taekwondo.</p>
+        </section>
+
+        <!-- Sección de Sedes y Ubicación -->
+        <section id="sedes">
+            <h2>Nuestras Sedes y Ubicaciones</h2>
+            <div class="contenedor-sedes">
+                
+                <!-- Sede 1 -->
+                <div class="tarjeta-sede">
+                    <h3>Sede Central</h3>
+                    <p><strong>Dirección:</strong> Av. Principal 123, Barrio Norte</p>
+                    <p class="detalle-sede">Ofrece clases para niños, jóvenes y adultos. Estacionamiento disponible.</p>
+                    
+                    <!-- Bloque para agregar la ubicación (Mapa) -->
+                    <div class="mapa-contenedor">
+                        <!-- NOTA: Aquí puedes pegar el código "iframe" que te da Google Maps -->
+                        <div class="mapa-falso">📍 Ver ubicación en mapa (Sede Central)</div>
+                    </div>
+                </div>
+
+                <!-- Sede 2 -->
+                <div class="tarjeta-sede">
+                    <h3>Sede Sur</h3>
+                    <p><strong>Dirección:</strong> Calle Deportes 456, Zona Sur</p>
+                    <p class="detalle-sede">Especializada en alta competencia, combate y entrenamiento físico intensivo.</p>
+                    
+                    <!-- Bloque para agregar la ubicación (Mapa) -->
+                    <div class="mapa-contenedor">
+                        <!-- NOTA: Aquí puedes pegar el código "iframe" que te da Google Maps -->
+                        <div class="mapa-falso">📍 Ver ubicación en mapa (Sede Sur)</div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Sección de Horarios -->
+        <section id="horarios" class="fondo-gris">
+            <h2>Horarios de Clases</h2>
+            <div class="tabla-contenedor">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Sede</th>
+                            <th>Días</th>
+                            <th>Horario</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Sede Central</td>
+                            <td>Lunes, Miércoles y Viernes</td>
+                            <td>18:00 - 20:00</td>
+                        </tr>
+                        <tr>
+                            <td>Sede Sur</td>
+                            <td>Martes y Jueves</td>
+                            <td>19:00 - 21:00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Sección de Exámenes -->
+        <section id="examenes">
+            <h2>Próximos Exámenes de Cinturón</h2>
+            <div class="alerta-examen">
+                <h3>📅 Próxima mesa de examen: Noviembre 2026</h3>
+                <p>Recuerda que para presentarte debes contar con la autorización de tu Sabonim, tener la cuota al día y cumplir con el mínimo de asistencias requeridas.</p>
+                <ul>
+                    <li><strong>Cinturones Blancos a Puntas Azules:</strong> Sábado 14 - 10:00 hs</li>
+                    <li><strong>Cinturones Azules a Rojas:</strong> Sábado 14 - 14:00 hs</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Sección de Maestros y Contacto -->
+        <section id="maestros" class="fondo-gris">
+            <h2>Nuestros Maestros y Contacto</h2>
+            <div class="contenedor-maestros">
+                
+                <!-- Maestro 1 -->
+                <div class="tarjeta-maestro">
+                    <div class="avatar">🥋</div>
+                    <h3>Sabonim Carlos Gómez</h3>
+                    <p class="rango">Cinturón Negro 4° Dan</p>
+                    <p>Director técnico de la <strong>Sede Central</strong>.</p>
+                    <p class="contacto-info">📞 Tel: +54 11 1234-5678 <br> ✉️ carlos.tkd@email.com</p>
+                </div>
+
+                <!-- Maestro 2 -->
+                <div class="tarjeta-maestro">
+                    <div class="avatar">🥋</div>
+                    <h3>Sabonim Laura Martínez</h3>
+                    <p class="rango">Cinturón Negro 3° Dan</p>
+                    <p>Instructora principal de la <strong>Sede Sur</strong>.</p>
+                    <p class="contacto-info">📞 Tel: +54 11 8765-4321 <br> ✉️ laura.tkd@email.com</p>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Pie de página -->
+    <footer>
+        <p>© 2026 - Escuela de Taekwondo. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- Enlace al archivo JavaScript -->
     <script src="app.js"></script>
 </body>
 </html>
