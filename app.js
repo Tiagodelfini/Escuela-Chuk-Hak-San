@@ -20,3 +20,9 @@ enlacesMenu.forEach(enlace => {
         menuLateral.classList.remove('activo');
     });
 });
+
+// Nueva función para abrir y cerrar preguntas
+  function toggleFaq(btn) {
+    const item = btn.parentElement;
+    item.classList.toggle('abierto');
+  }

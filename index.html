@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Taekwondo </title>
+  <title>Taekwondo chul hak san</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -17,9 +17,9 @@
 
     :root {
       --azul: #1a2a4a;
-      --borde: #ddd;
-      --card-bg: #ffffff;
-      --texto-muted: #666;
+      --borde: #e21212;
+      --card-bg: #f1f1f1;
+      --texto-muted: #181414;
     }
 
     .contenedor {
@@ -193,21 +193,78 @@
     }
     .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
     .cinta-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 5px; vertical-align: middle; }
+
+/* ── PREGUNTAS FRECUENTES (FAQ) ── */
+    .faq-contenedor {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .faq-item {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: white;
+      overflow: hidden;
+    }
+    .faq-pregunta {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 12px 15px;
+      text-align: left;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #333;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.2s;
+    }
+    .faq-pregunta:hover {
+      background: #f9f9f9;
+    }
+    .faq-pregunta i {
+      transition: transform 0.2s;
+      font-size: 16px;
+      color: var(--azul);
+    }
+    .faq-respuesta {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.2s ease-out;
+      background: #fafafa;
+    }
+    .faq-respuesta p {
+      padding: 12px 15px;
+      font-size: 13px;
+      color: #555;
+      line-height: 1.5;
+    }
+    .faq-item.abierto .faq-respuesta {
+      max-height: 200px; 
+    }
+    .faq-item.abierto .faq-pregunta i {
+      transform: rotate(180deg); 
+    }
+    
   </style>
 </head>
 <body>
 <div class="contenedor">
+    
 
   <!-- HERO -->
   <div class="hero">
-    <div class="emoji">🥋</div>
+    <div class="img">🥋</div>
     <h1>Escuela de Taekwondo</h1>
     <p>Disciplina · Fuerza · Respeto</p>
   </div>
 
   <!-- MENÚ -->
   <nav>
-    <button class="active" onclick="mostrar('sedes', this)">
+    <button class="active" onclick="mostrar('Sedes', this)">
       <i class="ti ti-map-pin"></i> Sedes
     </button>
     <button onclick="mostrar('horarios', this)">
@@ -224,6 +281,9 @@
     </button>
     <button onclick="mostrar('nosotros', this)">
       <i class="ti ti-users"></i> Nosotros
+    </button>
+    <button onclick="mostrar('torneos', this)">
+      <i class="ti ti-trophy"></i> Torneos
     </button>
   </nav>
 
@@ -302,7 +362,6 @@
         <div class="cabecera"><strong>🥋 Próximos exámenes</strong><p>Sede Central — 2026</p></div>
         <div class="cuerpo">
           <div class="fila"><span class="muted"><span class="cinta-dot" style="background:#FFD700"></span>Blanco → Amarillo</span><span class="strong">14 Jun</span></div>
-          <div class="fila"><span class="muted"><span class="cinta-dot" style="background:#ff8c00"></span>Amarillo → Naranja</span><span class="strong">14 Jun</span></div>
           <div class="fila"><span class="muted"><span class="cinta-dot" style="background:#228B22"></span>Naranja → Verde</span><span class="strong">12 Jul</span></div>
           <div class="fila"><span class="muted"><span class="cinta-dot" style="background:#00008B"></span>Verde → Azul</span><span class="strong">12 Jul</span></div>
           <div class="fila"><span class="muted"><span class="cinta-dot" style="background:#8B0000"></span>Azul → Rojo</span><span class="strong">20 Sep</span></div>
@@ -446,7 +505,82 @@
     </div>
   </div>
 
+
+
+
+
+
+<!--Torneos-->
+<div class="section" id="torneos">
+    <div class="card" style="line-height: 1.7; color: #444;">
+        <h3 style="font-size: 20px; margin-bottom: 0.75rem;">Torneos</h3>
+        <p>Aqui puedes encontrar toda la informacion relacionada con los torneos de la escuela.</p>
+        <p style="font-size: 15px;"></p>
+       
+    </div>
+
 </div>
+
+
+<!-- Bloque de Preguntas Frecuentes -->
+<h3 style="font-size:16px; margin-top:1.25rem; margin-bottom:.75rem">Preguntas Frecuentes</h3>
+
+<div class="faq-contenedor">
+  <div class="faq-item">
+    <button class="faq-pregunta" onclick="toggleFaq(this)">
+      ¿A qué edad se puede empezar a entrenar?
+      <i class="ti ti-chevron-down"></i>
+    </button>
+    <div class="faq-respuesta">
+      <p>En nuestra escuela recibimos alumnos a partir de los 5 años en las clases infantiles. No hay límite de edad para los grupos de adultos; el entrenamiento se adapta a las capacidades de cada persona.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-pregunta" onclick="toggleFaq(this)">
+      ¿Necesito tener estado físico previo o flexibilidad?
+      <i class="ti ti-chevron-down"></i>
+    </button>
+    <div class="faq-respuesta">
+      <p>¡Para nada! El estado físico, la fuerza y la flexibilidad se van desarrollando clase a clase de forma progresiva. Cada alumno avanza a su propio ritmo bajo la guía del instructor.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-pregunta" onclick="toggleFaq(this)">
+      ¿Cómo tengo que ir vestido a mi primera clase?
+      <i class="ti ti-chevron-down"></i>
+    </button>
+    <div class="faq-respuesta">
+      <p>Para tus clases de prueba puedes venir con ropa deportiva cómoda (remera y jogging o calza) y una botellita de agua. Entrenamos descalzos sobre el piso de goma (piso encastrable o tatami). Una vez que te inscribes, te indicaremos cómo adquirir tu uniforme oficial (Dobok).</p>
+    </div>
+  </div>
+
+    <div class="faq-item">
+    <button class="faq-pregunta" onclick="toggleFaq(this)">
+      ¿Que se requiere para presentarse a un examen?
+      <i class="ti ti-chevron-down"></i>
+    </button>
+    <div class="faq-respuesta">
+      <p>Es algo que depende exclusivamente del alumno, si este va frecuentemente a las clases y el profesor lo ve lo suficientemente preparado, este mismo lo convocara al lugar donde se realiza el proximo examen </p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-pregunta" onclick="toggleFaq(this)">
+      ¿Las clases son mixtas?
+      <i class="ti ti-chevron-down"></i>
+    </button>
+    <div class="faq-respuesta">
+      <p>Sí, todas nuestras clases tanto infantiles como de adultos y juveniles son completamente mixtas, fomentando el compañerismo y el respeto mutuo entre todos los practicantes.</p>
+    </div>
+  </div>
+</div>
+
+
+</div>
+
+
 
 <script>
   function mostrar(id, btn) {
@@ -454,6 +588,23 @@
     document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
     document.getElementById(id).classList.add('visible');
     btn.classList.add('active');
+  }
+</script>
+
+
+<script>
+  // Tu función original para cambiar de pestaña en el menú
+  function mostrar(id, btn) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
+    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('visible');
+    btn.classList.add('active');
+  }
+
+  // 👇 NUEVA FUNCIÓN: Copia esto aquí abajo 👇
+  function toggleFaq(btn) {
+    const item = btn.parentElement;
+    item.classList.toggle('abierto');
   }
 </script>
 
