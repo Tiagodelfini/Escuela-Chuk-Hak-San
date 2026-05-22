@@ -1,146 +1,461 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Taekwondo Club</title>
-    <!-- Enlace al archivo CSS -->
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Taekwondo </title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f0f0;
+      color: #111;
+      padding: 20px;
+    }
+
+    :root {
+      --azul: #1a2a4a;
+      --borde: #ddd;
+      --card-bg: #ffffff;
+      --texto-muted: #666;
+    }
+
+    .contenedor {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--azul);
+      color: white;
+      padding: 2.5rem 1.5rem 2rem;
+      text-align: center;
+      border-radius: 12px;
+      margin-bottom: 1.25rem;
+    }
+    .hero .emoji { font-size: 40px; margin-bottom: 10px; }
+    .hero h1 { font-size: 28px; font-weight: 600; letter-spacing: 1px; }
+    .hero p { font-size: 14px; margin-top: 6px; opacity: 0.75; }
+
+    /* ── MENÚ ── */
+    nav {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 1.25rem;
+    }
+    nav button {
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 1px solid #ccc;
+      background: white;
+      color: #333;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s;
+    }
+    nav button.active,
+    nav button:hover {
+      background: var(--azul);
+      color: white;
+      border-color: var(--azul);
+    }
+
+    /* ── SECCIONES ── */
+    .section { display: none; }
+    .section.visible { display: block; }
+
+    /* ── GRID GENERAL ── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+    }
+
+    /* ── TARJETAS SIMPLES ── */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--borde);
+      border-radius: 12px;
+      padding: 1.1rem 1.25rem;
+    }
+    .card .emoji { font-size: 28px; margin-bottom: 8px; }
+    .card h3 { font-size: 15px; font-weight: 600; }
+    .card p { font-size: 13px; color: var(--texto-muted); margin-top: 4px; }
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: #E6F1FB;
+      color: #0C447C;
+      margin-top: 8px;
+    }
+
+    /* ── TARJETAS CON CABECERA AZUL ── */
+    .card-azul {
+      background: var(--card-bg);
+      border: 1px solid var(--borde);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .card-azul .cabecera {
+      background: var(--azul);
+      color: white;
+      padding: 10px 14px;
+    }
+    .card-azul .cabecera p { font-size: 12px; opacity: 0.7; margin-top: 2px; }
+    .card-azul .cuerpo { padding: 10px 14px; }
+    .fila {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 0;
+      border-bottom: 1px solid #eee;
+      font-size: 13px;
+    }
+    .fila:last-child { border-bottom: none; }
+    .fila .muted { color: var(--texto-muted); }
+    .fila .strong { font-weight: 600; }
+
+    /* ── MAESTROS ── */
+    .maestro-card {
+      background: var(--card-bg);
+      border: 1px solid var(--borde);
+      border-radius: 12px;
+      padding: 1.1rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .maestro-top { display: flex; align-items: center; gap: 12px; }
+    .avatar {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: #E6F1FB;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 600; font-size: 14px; color: #0C447C;
+      flex-shrink: 0;
+    }
+    .maestro-info span { font-size: 15px; font-weight: 600; display: block; }
+    .maestro-info small { font-size: 12px; color: var(--texto-muted); }
+    .detalle {
+      font-size: 13px;
+      color: var(--texto-muted);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    /* ── UBICACIÓN ── */
+    .ubicacion-card {
+      background: var(--card-bg);
+      border: 1px solid var(--borde);
+      border-radius: 12px;
+      padding: 1.1rem 1.25rem;
+    }
+    .ubicacion-card h3 {
+      font-size: 15px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 10px;
+    }
+    .dir { font-size: 13px; color: var(--texto-muted); margin-bottom: 4px; }
+    .map-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      border: 1px solid #ccc;
+      color: #555;
+      text-decoration: none;
+      margin-top: 8px;
+      transition: all 0.15s;
+    }
+    .map-link:hover { border-color: var(--azul); color: var(--azul); }
+
+    /* ── CINTURONES ── */
+    .cinturones { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 1rem; }
+    .cinta {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 12px; padding: 4px 10px;
+      border-radius: 999px; border: 1px solid #ccc; color: #555;
+    }
+    .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+    .cinta-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 5px; vertical-align: middle; }
+  </style>
 </head>
 <body>
+<div class="contenedor">
 
-    <!-- Cabecera de la página con el Menú de Navegación Ampliado -->
-    <header>
-        <div class="logo">
-            <h2>Taekwondo Club</h2>
+  <!-- HERO -->
+  <div class="hero">
+    <div class="emoji">🥋</div>
+    <h1>Escuela de Taekwondo</h1>
+    <p>Disciplina · Fuerza · Respeto</p>
+  </div>
+
+  <!-- MENÚ -->
+  <nav>
+    <button class="active" onclick="mostrar('sedes', this)">
+      <i class="ti ti-map-pin"></i> Sedes
+    </button>
+    <button onclick="mostrar('horarios', this)">
+      <i class="ti ti-clock"></i> Horarios
+    </button>
+    <button onclick="mostrar('examenes', this)">
+      <i class="ti ti-certificate"></i> Exámenes
+    </button>
+    <button onclick="mostrar('maestros', this)">
+      <i class="ti ti-user"></i> Maestros
+    </button>
+    <button onclick="mostrar('ubicacion', this)">
+      <i class="ti ti-location"></i> Ubicación
+    </button>
+    <button onclick="mostrar('nosotros', this)">
+      <i class="ti ti-users"></i> Nosotros
+    </button>
+  </nav>
+
+  <!-- SEDES -->
+  <div class="section visible" id="sedes">
+    <div class="grid">
+      <div class="card">
+        <div class="emoji">🏛️</div>
+        <h3>Sede Central</h3>
+        <p>Av. San Martín 450, Villa Carlos Paz</p>
+        <span class="badge">Principal</span>
+      </div>
+      <div class="card">
+        <div class="emoji">🏢</div>
+        <h3>Sede Norte</h3>
+        <p>Los Álamos 120, Barrio Norte</p>
+        <span class="badge">Lun · Mié · Vie</span>
+      </div>
+      <div class="card">
+        <div class="emoji">🏫</div>
+        <h3>Sede Sur</h3>
+        <p>Urquiza 890, Villa del Lago</p>
+        <span class="badge">Mar · Jue · Sáb</span>
+      </div>
+      <div class="card">
+        <div class="emoji">⛳</div>
+        <h3>Sede Cosquín</h3>
+        <p>Belgrano 33, Cosquín</p>
+        <span class="badge">Sáb · Dom</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- HORARIOS -->
+  <div class="section" id="horarios">
+    <div class="grid">
+      <div class="card-azul">
+        <div class="cabecera"><strong>🏛️ Sede Central</strong><p>Lun · Mié · Vie</p></div>
+        <div class="cuerpo">
+          <div class="fila"><span class="muted">Infantil (5–10)</span><span class="strong">17:00 – 18:00</span></div>
+          <div class="fila"><span class="muted">Principiantes</span><span class="strong">18:00 – 19:30</span></div>
+          <div class="fila"><span class="muted">Intermedios</span><span class="strong">19:30 – 21:00</span></div>
+          <div class="fila"><span class="muted">Avanzados</span><span class="strong">21:00 – 22:30</span></div>
         </div>
-        <nav>
-            <ul>
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#sedes">Sedes y Ubicación</a></li>
-                <li><a href="#horarios">Horarios</a></li>
-                <li><a href="#examenes">Exámenes</a></li>
-                <li><a href="#maestros">Maestros y Contacto</a></li>
-            </ul>
-        </nav>
-    </header>
+      </div>
+      <div class="card-azul">
+        <div class="cabecera"><strong>🏢 Sede Norte</strong><p>Lun · Mié · Vie</p></div>
+        <div class="cuerpo">
+          <div class="fila"><span class="muted">Infantil (5–10)</span><span class="strong">16:30 – 17:30</span></div>
+          <div class="fila"><span class="muted">Principiantes</span><span class="strong">17:30 – 19:00</span></div>
+          <div class="fila"><span class="muted">Intermedios</span><span class="strong">19:00 – 20:30</span></div>
+        </div>
+      </div>
+      <div class="card-azul">
+        <div class="cabecera"><strong>🏫 Sede Sur</strong><p>Mar · Jue · Sáb</p></div>
+        <div class="cuerpo">
+          <div class="fila"><span class="muted">Infantil (5–10)</span><span class="strong">17:00 – 18:00</span></div>
+          <div class="fila"><span class="muted">Principiantes</span><span class="strong">18:00 – 19:30</span></div>
+          <div class="fila"><span class="muted">Avanzados</span><span class="strong">19:30 – 21:00</span></div>
+        </div>
+      </div>
+      <div class="card-azul">
+        <div class="cabecera"><strong>⛳ Sede Cosquín</strong><p>Sáb · Dom</p></div>
+        <div class="cuerpo">
+          <div class="fila"><span class="muted">Todas las edades</span><span class="strong">10:00 – 12:00</span></div>
+          <div class="fila"><span class="muted">Competición</span><span class="strong">15:00 – 17:00</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <!-- Contenido Principal -->
-    <main>
-        <!-- Sección de Bienvenida -->
-        <section id="inicio" class="hero">
-            <h1>Bienvenidos al Dojang</h1>
-            <p>Disciplina, respeto y superación personal a través del Taekwondo.</p>
-        </section>
+  <!-- EXÁMENES -->
+  <div class="section" id="examenes">
+    <div class="grid">
+      <div class="card-azul">
+        <div class="cabecera"><strong>🥋 Próximos exámenes</strong><p>Sede Central — 2026</p></div>
+        <div class="cuerpo">
+          <div class="fila"><span class="muted"><span class="cinta-dot" style="background:#FFD700"></span>Blanco → Amarillo</span><span class="strong">14 Jun</span></div>
+          <div class="fila"><span class="muted"><span class="cinta-dot" style="background:#ff8c00"></span>Amarillo → Naranja</span><span class="strong">14 Jun</span></div>
+          <div class="fila"><span class="muted"><span class="cinta-dot" style="background:#228B22"></span>Naranja → Verde</span><span class="strong">12 Jul</span></div>
+          <div class="fila"><span class="muted"><span class="cinta-dot" style="background:#00008B"></span>Verde → Azul</span><span class="strong">12 Jul</span></div>
+          <div class="fila"><span class="muted"><span class="cinta-dot" style="background:#8B0000"></span>Azul → Rojo</span><span class="strong">20 Sep</span></div>
+          <div class="fila"><span class="muted"><span class="cinta-dot" style="background:#111"></span>Rojo → Negro</span><span class="strong">15 Nov</span></div>
+        </div>
+      </div>
+      <div class="card-azul">
+        <div class="cabecera"><strong>📋 Requisitos</strong><p>Para rendir examen</p></div>
+        <div class="cuerpo">
+          <div class="fila"><span class="muted">Meses de práctica</span><span class="strong">Mín. 3 meses</span></div>
+          <div class="fila"><span class="muted">Asistencia</span><span class="strong">Mín. 80%</span></div>
+          <div class="fila"><span class="muted">Arancel</span><span class="strong">Consultar sede</span></div>
+          <div class="fila"><span class="muted">Inscripción</span><span class="strong">15 días antes</span></div>
+          <div class="fila"><span class="muted">Uniforme</span><span class="strong">Dobok completo</span></div>
+        </div>
+      </div>
+      <div class="card-azul">
+        <div class="cabecera"><strong>🏆 Competencias</strong><p>Calendario 2026</p></div>
+        <div class="cuerpo">
+          <div class="fila"><span class="muted">Interno anual</span><span class="strong">28 Jun</span></div>
+          <div class="fila"><span class="muted">Copa Córdoba</span><span class="strong">Ago 2026</span></div>
+          <div class="fila"><span class="muted">Nacional juvenil</span><span class="strong">Oct 2026</span></div>
+          <div class="fila"><span class="muted">Cierre de año</span><span class="strong">Nov 2026</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-        <!-- Sección de Sedes y Ubicación -->
-        <section id="sedes">
-            <h2>Nuestras Sedes y Ubicaciones</h2>
-            <div class="contenedor-sedes">
-                
-                <!-- Sede 1 -->
-                <div class="tarjeta-sede">
-                    <h3>Sede Central</h3>
-                    <p><strong>Dirección:</strong> Av. Principal 123, Barrio Norte</p>
-                    <p class="detalle-sede">Ofrece clases para niños, jóvenes y adultos. Estacionamiento disponible.</p>
-                    
-                    <!-- Bloque para agregar la ubicación (Mapa) -->
-                    <div class="mapa-contenedor">
-                        <!-- NOTA: Aquí puedes pegar el código "iframe" que te da Google Maps -->
-                        <div class="mapa-falso">📍 Ver ubicación en mapa (Sede Central)</div>
-                    </div>
-                </div>
+  <!-- MAESTROS -->
+  <div class="section" id="maestros">
+    <div class="grid">
+      <div class="maestro-card">
+        <div class="maestro-top">
+          <div class="avatar">CR</div>
+          <div class="maestro-info">
+            <span>Carlos Rodríguez</span>
+            <small>Sede Central · Negro 4° Dan</small>
+          </div>
+        </div>
+        <div class="detalle"><i class="ti ti-phone"></i> +54 9 3541 10-0001</div>
+        <div class="detalle"><i class="ti ti-mail"></i> carlos@tkd.com.ar</div>
+        <div class="detalle"><i class="ti ti-brand-whatsapp"></i> WhatsApp disponible</div>
+        <div class="detalle"><i class="ti ti-calendar"></i> Lun · Mié · Vie</div>
+      </div>
+      <div class="maestro-card">
+        <div class="maestro-top">
+          <div class="avatar">ML</div>
+          <div class="maestro-info">
+            <span>Marcela López</span>
+            <small>Sede Norte · Negro 3° Dan</small>
+          </div>
+        </div>
+        <div class="detalle"><i class="ti ti-phone"></i> +54 9 3541 20-0002</div>
+        <div class="detalle"><i class="ti ti-mail"></i> marcela@tkd.com.ar</div>
+        <div class="detalle"><i class="ti ti-brand-whatsapp"></i> WhatsApp disponible</div>
+        <div class="detalle"><i class="ti ti-calendar"></i> Lun · Mié · Vie</div>
+      </div>
+      <div class="maestro-card">
+        <div class="maestro-top">
+          <div class="avatar">JP</div>
+          <div class="maestro-info">
+            <span>Julián Pérez</span>
+            <small>Sede Sur · Negro 2° Dan</small>
+          </div>
+        </div>
+        <div class="detalle"><i class="ti ti-phone"></i> +54 9 3541 30-0003</div>
+        <div class="detalle"><i class="ti ti-mail"></i> julian@tkd.com.ar</div>
+        <div class="detalle"><i class="ti ti-brand-whatsapp"></i> WhatsApp disponible</div>
+        <div class="detalle"><i class="ti ti-calendar"></i> Mar · Jue · Sáb</div>
+      </div>
+      <div class="maestro-card">
+        <div class="maestro-top">
+          <div class="avatar">AG</div>
+          <div class="maestro-info">
+            <span>Ana González</span>
+            <small>Sede Cosquín · Negro 3° Dan</small>
+          </div>
+        </div>
+        <div class="detalle"><i class="ti ti-phone"></i> +54 9 3541 40-0004</div>
+        <div class="detalle"><i class="ti ti-mail"></i> ana@tkd.com.ar</div>
+        <div class="detalle"><i class="ti ti-brand-whatsapp"></i> WhatsApp disponible</div>
+        <div class="detalle"><i class="ti ti-calendar"></i> Sáb · Dom</div>
+      </div>
+    </div>
+  </div>
 
-                <!-- Sede 2 -->
-                <div class="tarjeta-sede">
-                    <h3>Sede Sur</h3>
-                    <p><strong>Dirección:</strong> Calle Deportes 456, Zona Sur</p>
-                    <p class="detalle-sede">Especializada en alta competencia, combate y entrenamiento físico intensivo.</p>
-                    
-                    <!-- Bloque para agregar la ubicación (Mapa) -->
-                    <div class="mapa-contenedor">
-                        <!-- NOTA: Aquí puedes pegar el código "iframe" que te da Google Maps -->
-                        <div class="mapa-falso">📍 Ver ubicación en mapa (Sede Sur)</div>
-                    </div>
-                </div>
+  <!-- UBICACIÓN -->
+  <div class="section" id="ubicacion">
+    <div class="grid">
+      <div class="ubicacion-card">
+        <h3><i class="ti ti-map-pin"></i> Sede Central</h3>
+        <p class="dir">Av. San Martín 450, Villa Carlos Paz, Córdoba</p>
+        <p class="dir">Referencia: frente a la plaza principal</p>
+        <a class="map-link" href="https://maps.google.com/?q=Av.+San+Martín+450+Villa+Carlos+Paz" target="_blank">
+          <i class="ti ti-external-link"></i> Ver en Google Maps
+        </a>
+      </div>
+      <div class="ubicacion-card">
+        <h3><i class="ti ti-map-pin"></i> Sede Norte</h3>
+        <p class="dir">Los Álamos 120, Barrio Norte, V. Carlos Paz</p>
+        <p class="dir">Referencia: esquina con Calle Los Pinos</p>
+        <a class="map-link" href="https://maps.google.com/?q=Los+Álamos+120+Villa+Carlos+Paz" target="_blank">
+          <i class="ti ti-external-link"></i> Ver en Google Maps
+        </a>
+      </div>
+      <div class="ubicacion-card">
+        <h3><i class="ti ti-map-pin"></i> Sede Sur</h3>
+        <p class="dir">Urquiza 890, Villa del Lago, V. Carlos Paz</p>
+        <p class="dir">Referencia: al lado del polideportivo municipal</p>
+        <a class="map-link" href="https://maps.google.com/?q=Urquiza+890+Villa+del+Lago" target="_blank">
+          <i class="ti ti-external-link"></i> Ver en Google Maps
+        </a>
+      </div>
+      <div class="ubicacion-card">
+        <h3><i class="ti ti-map-pin"></i> Sede Cosquín</h3>
+        <p class="dir">Belgrano 33, Cosquín, Córdoba</p>
+        <p class="dir">Referencia: a media cuadra del río</p>
+        <a class="map-link" href="https://maps.google.com/?q=Belgrano+33+Cosquín+Córdoba" target="_blank">
+          <i class="ti ti-external-link"></i> Ver en Google Maps
+        </a>
+      </div>
+    </div>
+  </div>
 
-            </div>
-        </section>
+  <!-- NOSOTROS -->
+  <div class="section" id="nosotros">
+    <div class="card" style="line-height: 1.7; color: #444;">
+      <h3 style="font-size:16px;margin-bottom:.75rem">¿Quiénes somos?</h3>
+      <p>Somos una escuela de Taekwondo con más de 20 años de trayectoria en la región de Villa Carlos Paz. Formamos deportistas de todas las edades con valores de disciplina, respeto y superación personal.</p>
+      <p style="margin-top:.75rem">Nuestros instructores son cinturones negros certificados por la World Taekwondo Federation (WTF), con experiencia en competencia nacional e internacional.</p>
+      <h3 style="font-size:16px;margin-top:1.25rem;margin-bottom:.75rem">Grados disponibles</h3>
+      <div class="cinturones">
+        <span class="cinta"><span class="dot" style="background:#fff;border:1px solid #ccc"></span>Blanco</span>
+        <span class="cinta"><span class="dot" style="background:#FFD700"></span>Amarillo</span>
+        <span class="cinta"><span class="dot" style="background:#ff8c00"></span>Naranja</span>
+        <span class="cinta"><span class="dot" style="background:#228B22"></span>Verde</span>
+        <span class="cinta"><span class="dot" style="background:#00008B"></span>Azul</span>
+        <span class="cinta"><span class="dot" style="background:#8B0000"></span>Rojo</span>
+        <span class="cinta"><span class="dot" style="background:#111"></span>Negro</span>
+      </div>
+    </div>
+  </div>
 
-        <!-- Sección de Horarios -->
-        <section id="horarios" class="fondo-gris">
-            <h2>Horarios de Clases</h2>
-            <div class="tabla-contenedor">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Sede</th>
-                            <th>Días</th>
-                            <th>Horario</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Sede Central</td>
-                            <td>Lunes, Miércoles y Viernes</td>
-                            <td>18:00 - 20:00</td>
-                        </tr>
-                        <tr>
-                            <td>Sede Sur</td>
-                            <td>Martes y Jueves</td>
-                            <td>19:00 - 21:00</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
+</div>
 
-        <!-- Sección de Exámenes -->
-        <section id="examenes">
-            <h2>Próximos Exámenes de Cinturón</h2>
-            <div class="alerta-examen">
-                <h3>📅 Próxima mesa de examen: Noviembre 2026</h3>
-                <p>Recuerda que para presentarte debes contar con la autorización de tu Sabonim, tener la cuota al día y cumplir con el mínimo de asistencias requeridas.</p>
-                <ul>
-                    <li><strong>Cinturones Blancos a Puntas Azules:</strong> Sábado 14 - 10:00 hs</li>
-                    <li><strong>Cinturones Azules a Rojas:</strong> Sábado 14 - 14:00 hs</li>
-                </ul>
-            </div>
-        </section>
+<script>
+  function mostrar(id, btn) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
+    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('visible');
+    btn.classList.add('active');
+  }
+</script>
 
-        <!-- Sección de Maestros y Contacto -->
-        <section id="maestros" class="fondo-gris">
-            <h2>Nuestros Maestros y Contacto</h2>
-            <div class="contenedor-maestros">
-                
-                <!-- Maestro 1 -->
-                <div class="tarjeta-maestro">
-                    <div class="avatar">🥋</div>
-                    <h3>Sabonim Carlos Gómez</h3>
-                    <p class="rango">Cinturón Negro 4° Dan</p>
-                    <p>Director técnico de la <strong>Sede Central</strong>.</p>
-                    <p class="contacto-info">📞 Tel: +54 11 1234-5678 <br> ✉️ carlos.tkd@email.com</p>
-                </div>
-
-                <!-- Maestro 2 -->
-                <div class="tarjeta-maestro">
-                    <div class="avatar">🥋</div>
-                    <h3>Sabonim Laura Martínez</h3>
-                    <p class="rango">Cinturón Negro 3° Dan</p>
-                    <p>Instructora principal de la <strong>Sede Sur</strong>.</p>
-                    <p class="contacto-info">📞 Tel: +54 11 8765-4321 <br> ✉️ laura.tkd@email.com</p>
-                </div>
-
-            </div>
-        </section>
-    </main>
-
-    <!-- Pie de página -->
-    <footer>
-        <p>© 2026 - Escuela de Taekwondo. Todos los derechos reservados.</p>
-    </footer>
-
-    <!-- Enlace al archivo JavaScript -->
-    <script src="app.js"></script>
 </body>
 </html>

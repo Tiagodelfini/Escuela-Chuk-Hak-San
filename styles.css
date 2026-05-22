@@ -6,7 +6,7 @@
 }
 
 html {
-    scroll-behavior: smooth; /* Hace que el salto del menú sea suave */
+    scroll-behavior: smooth; /* Desplazamiento suave al dar clic */
 }
 
 body {
@@ -16,62 +16,112 @@ body {
     line-height: 1.6;
 }
 
-/* Estilos del Menú (Header) */
+/* BARRA SUPERIOR COMPLEMENTAMENTE VISIBLE */
 header {
     background-color: #1a1a1a;
     color: white;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 10%;
+    padding: 15px 5%;
     position: sticky;
     top: 0;
-    z-index: 1000; /* Asegura que el menú quede siempre arriba de todo */
-    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    z-index: 1000;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
-header nav ul {
+.menu{
     list-style: none;
-    display: flex;
+    display: flex; /* Pone los botones de lado */
+    gap: 10px;
 }
 
-header nav ul li {
-    margin-left: 20px;
-}
-
-header nav ul li a {
+/* Botones del menú superior muy fáciles de tocar */
+.btn-nav {
     color: white;
     text-decoration: none;
     font-weight: bold;
-    transition: color 0.3s ease;
+    padding: 10px 20px;
+    background-color: #2d2d2d;
+    border-radius: 6px;
+    transition: background 0.2s ease;
 }
 
-header nav ul li a:hover {
-    color: #ff4757; /* Color rojo de acento */
+.btn-nav:hover {
+    background-color: #ff4757; /* Cambia a rojo al pasar el mouse */
 }
 
-/* Secciones y Fondos */
+/* SECCIÓN INICIAL CON BOTONES GIGANTES (BLOQUES DE ACCESO) */
+.hero {
+    background-color: #1a1a1a;
+    color: white;
+    text-align: center;
+    padding: 60px 5%;
+}
+
+.hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    color: #ccc;
+    margin-bottom: 40px;
+}
+
+/* La cuadrícula donde están los accesos directos */
+.cuadrula-accesos {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap; /* Si la pantalla es chica, se acomodan abajo solos */
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Las cajas/botones grandes */
+.bloque-acceso {
+    background-color: white;
+    color: #1a1a1a;
+    text-decoration: none;
+    padding: 25px;
+    width: 230px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-align: center;
+}
+
+.bloque-acceso:hover {
+    transform: translateY(-5px); /* Pequeño salto visual al pasar el mouse */
+    box-shadow: 0 6px 20px rgba(255, 71, 87, 0.3);
+    border-bottom: 4px solid #ff4757;
+}
+
+.icono-bloque {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.bloque-acceso h3 {
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+
+.bloque-acceso p {
+    color: #666;
+    font-size: 0.85rem;
+    margin-bottom: 0;
+}
+
+/* Estilos de las Secciones Informativas */
 section {
     padding: 80px 10%;
 }
 
 .fondo-gris {
     background-color: #edf2f7;
-}
-
-.hero {
-    background-color: #1a1a1a;
-    color: white;
-    text-align: center;
-    padding: 120px 10%;
-    background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1555597673-b21d5c935865?q=80&w=1200'); /* Imagen de fondo de cortesía */
-    background-size: cover;
-    background-position: center;
-}
-
-.hero h1 {
-    font-size: 3rem;
-    margin-bottom: 10px;
 }
 
 h2 {
@@ -85,6 +135,7 @@ h2 {
 .contenedor-sedes {
     display: flex;
     gap: 30px;
+    flex-wrap: wrap;
 }
 
 .tarjeta-sede {
@@ -93,34 +144,25 @@ h2 {
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.05);
     flex: 1;
+    min-width: 280px;
 }
 
-.tarjeta-sede h3 {
-    margin-bottom: 15px;
-    color: #1a1a1a;
-}
-
-.detalle-sede {
-    margin: 15px 0;
-    color: #666;
-}
-
-/* Bloque contenedor para la Ubicación/Mapa */
 .mapa-contenedor {
     margin-top: 20px;
-    width: 100%;
 }
 
 .mapa-falso {
     background-color: #e2e8f0;
-    height: 150px;
+    height: 120px;
     border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
     border: 2px dashed #cbd5e0;
     color: #4a5568;
-    font-weight: 500;
+    font-size: 0.9rem;
+    padding: 10px;
+    text-align: center;
 }
 
 /* Estilos de la Tabla de Horarios */
@@ -155,24 +197,11 @@ th {
     border-radius: 4px;
 }
 
-.alerta-examen h3 {
-    color: #c53030;
-    margin-bottom: 15px;
-}
-
-.alerta-examen ul {
-    margin-top: 15px;
-    padding-left: 20px;
-}
-
-.alerta-examen li {
-    margin-bottom: 8px;
-}
-
-/* Sección de Maestros y Contacto */
+/* Sección de Maestros */
 .contenedor-maestros {
     display: flex;
     gap: 30px;
+    flex-wrap: wrap;
 }
 
 .tarjeta-maestro {
@@ -182,6 +211,7 @@ th {
     box-shadow: 0 4px 15px rgba(0,0,0,0.05);
     text-align: center;
     flex: 1;
+    min-width: 250px;
 }
 
 .avatar {
@@ -192,22 +222,18 @@ th {
 .rango {
     color: #ff4757;
     font-weight: bold;
-    margin-bottom: 15px;
 }
 
 .contacto-info {
-    margin-top: 20px;
+    margin-top: 15px;
     padding-top: 15px;
     border-top: 1px solid #e2e8f0;
-    font-size: 0.9rem;
     color: #555;
 }
 
-/* Pie de página */
 footer {
     background-color: #1a1a1a;
     color: #888;
     text-align: center;
     padding: 30px;
-    font-size: 0.9rem;
 }
