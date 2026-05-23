@@ -3,196 +3,322 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Taekwondo chul hak san</title>
+  <title>Escuela Chuk hak san</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #f0f0f0;
-      color: #111;
-      padding: 20px;
+      background: #eaeaea;
+      min-height: 100vh;
     }
 
     :root {
       --azul: #1a2a4a;
-      --borde: #e21212;
-      --card-bg: #f1f1f1;
-      --texto-muted: #181414;
+      --borde: #e0e0e0;
+      --muted: #666;
     }
 
-    .contenedor {
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    /* ── HERO ── */
-    .hero {
+    /* ══════════════════════════════
+       BARRA SUPERIOR
+    ══════════════════════════════ */
+    .topbar {
       background: var(--azul);
-      color: white;
-      padding: 2.5rem 1.5rem 2rem;
-      text-align: center;
-      border-radius: 12px;
-      margin-bottom: 1.25rem;
-    }
-    .hero .emoji { font-size: 40px; margin-bottom: 10px; }
-    .hero h1 { font-size: 28px; font-weight: 600; letter-spacing: 1px; }
-    .hero p { font-size: 14px; margin-top: 6px; opacity: 0.75; }
-
-    /* ── MENÚ ── */
-    nav {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-bottom: 1.25rem;
-    }
-    nav button {
-      padding: 8px 16px;
-      border-radius: 999px;
-      border: 1px solid #ccc;
-      background: white;
-      color: #333;
-      font-size: 13px;
-      cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 6px;
-      transition: all 0.15s;
-    }
-    nav button.active,
-    nav button:hover {
-      background: var(--azul);
-      color: white;
-      border-color: var(--azul);
+      justify-content: space-between;
+      padding: 0 28px;
+      height: 60px;
+      position: sticky;
+      top: 0;
+      z-index: 200;
     }
 
-    /* ── SECCIONES ── */
-    .section { display: none; }
-    .section.visible { display: block; }
-
-    /* ── GRID GENERAL ── */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    .topbar-izq {
+      display: flex;
+      align-items: center;
       gap: 14px;
     }
 
-    /* ── TARJETAS SIMPLES ── */
-    .card {
-      background: var(--card-bg);
-      border: 1px solid var(--borde);
-      border-radius: 12px;
-      padding: 1.1rem 1.25rem;
+    /* Botón hamburguesa */
+    .btn-ham {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      flex-shrink: 0;
     }
-    .card .emoji { font-size: 28px; margin-bottom: 8px; }
-    .card h3 { font-size: 15px; font-weight: 600; }
-    .card p { font-size: 13px; color: var(--texto-muted); margin-top: 4px; }
-    .badge {
-      display: inline-block;
-      font-size: 11px;
-      padding: 3px 10px;
-      border-radius: 999px;
-      background: #E6F1FB;
-      color: #0C447C;
-      margin-top: 8px;
+    .btn-ham span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: white;
+      border-radius: 2px;
+      transition: all 0.25s ease;
+    }
+    .btn-ham.abierto span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .btn-ham.abierto span:nth-child(2) { opacity: 0; }
+    .btn-ham.abierto span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .topbar-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .topbar-logo .emoji { font-size: 26px; }
+    .topbar-logo .nombre { color: white; font-size: 17px; font-weight: 600; }
+    .topbar-logo .sub { color: rgba(255,255,255,0.5); font-size: 11px; }
+
+    .topbar-seccion {
+      color: rgba(255,255,255,0.6);
+      font-size: 14px;
     }
 
-    /* ── TARJETAS CON CABECERA AZUL ── */
-    .card-azul {
-      background: var(--card-bg);
-      border: 1px solid var(--borde);
-      border-radius: 12px;
-      overflow: hidden;
+    /* ══════════════════════════════
+       OVERLAY FONDO OSCURO
+    ══════════════════════════════ */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 300;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s;
     }
-    .card-azul .cabecera {
+    .overlay.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* ══════════════════════════════
+       MENÚ LATERAL (SIDEBAR)
+    ══════════════════════════════ */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 280px;
       background: var(--azul);
-      color: white;
-      padding: 10px 14px;
+      z-index: 400;
+      transform: translateX(-100%);
+      transition: transform 0.28s ease;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
     }
-    .card-azul .cabecera p { font-size: 12px; opacity: 0.7; margin-top: 2px; }
-    .card-azul .cuerpo { padding: 10px 14px; }
+    .sidebar.visible { transform: translateX(0); }
+
+    .sidebar-head {
+      padding: 32px 22px 18px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .sidebar-head .s-emoji { font-size: 36px; margin-bottom: 8px; display: block; }
+    .sidebar-head .s-titulo { color: white; font-size: 18px; font-weight: 700; }
+    .sidebar-head .s-sub { color: rgba(255,255,255,0.45); font-size: 12px; margin-top: 3px; }
+
+    .sidebar-menu { flex: 1; padding: 10px 0; }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 13px 22px;
+      cursor: pointer;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+      color: rgba(255,255,255,0.65);
+      font-size: 15px;
+      font-family: 'Segoe UI', sans-serif;
+      border-left: 3px solid transparent;
+      transition: all 0.15s;
+    }
+    .menu-item i { font-size: 19px; flex-shrink: 0; }
+    .menu-item .chevron { margin-left: auto; font-size: 14px; opacity: 0.3; }
+    .menu-item:hover {
+      background: rgba(255,255,255,0.08);
+      color: white;
+      border-left-color: rgba(255,255,255,0.3);
+    }
+    .menu-item.activo {
+      background: rgba(255,255,255,0.13);
+      color: white;
+      border-left-color: white;
+      font-weight: 600;
+    }
+
+    .sidebar-foot {
+      padding: 16px 22px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      font-size: 11px;
+      color: rgba(255,255,255,0.3);
+    }
+
+    /* ══════════════════════════════
+       CONTENIDO PRINCIPAL
+    ══════════════════════════════ */
+    .contenido {
+      max-width: 1100px;
+      margin: 32px auto;
+      padding: 0 28px;
+    }
+
+    .section { display: none; }
+    .section.visible { display: block; }
+
+    /* Banner hero de cada sección */
+    .hero-banner {
+      background: var(--azul);
+      border-radius: 14px;
+      padding: 28px 32px;
+      color: white;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .hero-banner h2 { font-size: 24px; font-weight: 700; }
+    .hero-banner p { font-size: 14px; opacity: 0.65; margin-top: 5px; }
+    .hero-banner .h-emoji { font-size: 56px; opacity: 0.2; }
+
+    /* ══════════════════════════════
+       GRILLAS
+    ══════════════════════════════ */
+    .grid2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+
+    /* ══════════════════════════════
+       COMPONENTES
+    ══════════════════════════════ */
+
+    /* Tarjeta simple */
+    .card {
+      background: white;
+      border: 1px solid var(--borde);
+      border-radius: 14px;
+      padding: 20px;
+    }
+
+    /* Tarjeta con cabecera azul */
+    .card-azul { background: white; border: 1px solid var(--borde); border-radius: 14px; overflow: hidden; }
+    .card-azul .cabecera { background: var(--azul); color: white; padding: 12px 16px; font-size: 15px; font-weight: 600; }
+    .card-azul .cabecera small { display: block; font-size: 12px; opacity: 0.6; font-weight: 400; margin-top: 2px; }
+    .card-azul .cuerpo { padding: 4px 16px 12px; }
+
+    /* Fila de datos */
     .fila {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 6px 0;
-      border-bottom: 1px solid #eee;
-      font-size: 13px;
+      padding: 9px 0;
+      border-bottom: 1px solid #f2f2f2;
+      font-size: 14px;
     }
     .fila:last-child { border-bottom: none; }
-    .fila .muted { color: var(--texto-muted); }
-    .fila .strong { font-weight: 600; }
+    .fila .muted { color: var(--muted); }
+    .fila .strong { font-weight: 600; color: #111; }
 
-    /* ── MAESTROS ── */
+    /* Sedes */
+    .sede-icon { font-size: 30px; margin-bottom: 12px; }
+    .sede-nombre { font-size: 15px; font-weight: 700; color: #111; }
+    .sede-dir { font-size: 13px; color: var(--muted); margin-top: 5px; line-height: 1.5; }
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #E6F1FB;
+      color: #0C447C;
+      margin-top: 10px;
+      font-weight: 600;
+    }
+
+    /* Maestros */
     .maestro-card {
-      background: var(--card-bg);
+      background: white;
       border: 1px solid var(--borde);
-      border-radius: 12px;
-      padding: 1.1rem 1.25rem;
+      border-radius: 14px;
+      padding: 20px;
       display: flex;
       flex-direction: column;
       gap: 10px;
     }
-    .maestro-top { display: flex; align-items: center; gap: 12px; }
+    .maestro-top { display: flex; align-items: center; gap: 14px; }
     .avatar {
-      width: 44px; height: 44px;
+      width: 46px; height: 46px;
       border-radius: 50%;
       background: #E6F1FB;
       display: flex; align-items: center; justify-content: center;
-      font-weight: 600; font-size: 14px; color: #0C447C;
+      font-size: 14px; font-weight: 700; color: #0C447C;
       flex-shrink: 0;
     }
-    .maestro-info span { font-size: 15px; font-weight: 600; display: block; }
-    .maestro-info small { font-size: 12px; color: var(--texto-muted); }
-    .detalle {
-      font-size: 13px;
-      color: var(--texto-muted);
-      display: flex;
-      align-items: center;
-      gap: 7px;
+    .m-nombre { font-size: 15px; font-weight: 700; color: #111; }
+    .m-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .m-divider { border: none; border-top: 1px solid #f0f0f0; }
+    .m-detalle {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 13px; color: var(--muted);
     }
+    .m-detalle i { font-size: 15px; color: #bbb; }
 
-    /* ── UBICACIÓN ── */
-    .ubicacion-card {
-      background: var(--card-bg);
-      border: 1px solid var(--borde);
-      border-radius: 12px;
-      padding: 1.1rem 1.25rem;
-    }
-    .ubicacion-card h3 {
-      font-size: 15px;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      margin-bottom: 10px;
-    }
-    .dir { font-size: 13px; color: var(--texto-muted); margin-bottom: 4px; }
+    /* Ubicación */
+    .mapa-card { background: white; border: 1px solid var(--borde); border-radius: 14px; padding: 20px; }
+    .mapa-card h3 { font-size: 15px; font-weight: 700; color: #111; display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+    .mapa-dir { font-size: 13px; color: var(--muted); margin-bottom: 3px; line-height: 1.5; }
     .map-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 12px;
-      padding: 5px 12px;
-      border-radius: 999px;
-      border: 1px solid #ccc;
-      color: #555;
-      text-decoration: none;
-      margin-top: 8px;
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 12px; padding: 6px 14px;
+      border-radius: 999px; border: 1px solid #ccc;
+      color: #555; text-decoration: none; margin-top: 10px;
       transition: all 0.15s;
     }
     .map-link:hover { border-color: var(--azul); color: var(--azul); }
 
-    /* ── CINTURONES ── */
-    .cinturones { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 1rem; }
+    /* Cinturones */
+    .cinturones { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
     .cinta {
       display: flex; align-items: center; gap: 6px;
-      font-size: 12px; padding: 4px 10px;
-      border-radius: 999px; border: 1px solid #ccc; color: #555;
+      font-size: 12px; padding: 4px 11px;
+      border-radius: 999px; border: 1px solid #ddd; color: #555;
     }
     .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
-    .cinta-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 5px; vertical-align: middle; }
+    .dot-g { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 5px; vertical-align: middle; }
+
+    /* ══════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════ */
+    @media (max-width: 900px) {
+      .grid4 { grid-template-columns: repeat(2, 1fr); }
+      .grid3 { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .contenido { padding: 0 14px; margin: 16px auto; }
+      .grid2, .grid3, .grid4 { grid-template-columns: 1fr; }
+      .hero-banner { padding: 20px; }
+      .hero-banner h2 { font-size: 20px; }
+      .hero-banner .h-emoji { font-size: 36px; }
+      .sidebar { width: 78%; }
+      .topbar { padding: 0 16px; }
+      .topbar-logo .sub { display: none; }
+    }
+
+    /* Controla el tamaño del escudo para que no se desarme la barra */
+.logo-escudo {
+    height: 38px;          /* Limita el alto máximo para que entre en la barra */
+    width: auto;           /* Hace que el ancho se ajuste automáticamente sin deformarse */
+    object-fit: contain;   /* Asegura que la imagen mantenga su proporción perfecta */
+    margin-right: 12px;    /* Separa un poquito el escudo del texto "CHUL HAK SAN" */
+    vertical-align: middle;/* Alinea el escudo perfectamente al centro con el texto de al lado */
+}
+
 
 /* ── PREGUNTAS FRECUENTES (FAQ) ── */
     .faq-contenedor {
@@ -242,284 +368,358 @@
       color: #555;
       line-height: 1.5;
     }
+    /* Clase que usaremos con JavaScript para abrir la pregunta */
     .faq-item.abierto .faq-respuesta {
-      max-height: 200px; 
+      max-height: 200px; /* Permite que se despliegue */
     }
     .faq-item.abierto .faq-pregunta i {
-      transform: rotate(180deg); 
+      transform: rotate(180deg); /* Gira la flecha hacia arriba */
     }
-    
+
   </style>
 </head>
 <body>
-<div class="contenedor">
-    
 
-  <!-- HERO -->
-  <div class="hero">
-    <div class="img">🥋</div>
-    <h1>Escuela de Taekwondo</h1>
-    <p>Disciplina · Fuerza · Respeto</p>
-  </div>
+  <!-- ══ OVERLAY ══ -->
+  <div class="overlay" id="overlay" onclick="cerrarMenu()"></div>
 
-  <!-- MENÚ -->
-  <nav>
-    <button class="active" onclick="mostrar('Sedes', this)">
-      <i class="ti ti-map-pin"></i> Sedes
-    </button>
-    <button onclick="mostrar('horarios', this)">
-      <i class="ti ti-clock"></i> Horarios
-    </button>
-    <button onclick="mostrar('examenes', this)">
-      <i class="ti ti-certificate"></i> Exámenes
-    </button>
-    <button onclick="mostrar('maestros', this)">
-      <i class="ti ti-user"></i> Maestros
-    </button>
-    <button onclick="mostrar('ubicacion', this)">
-      <i class="ti ti-location"></i> Ubicación
-    </button>
-    <button onclick="mostrar('nosotros', this)">
-      <i class="ti ti-users"></i> Nosotros
-    </button>
-    <button onclick="mostrar('torneos', this)">
-      <i class="ti ti-trophy"></i> Torneos
-    </button>
-  </nav>
-
-  <!-- SEDES -->
-  <div class="section visible" id="sedes">
-    <div class="grid">
-      <div class="card">
-        <div class="emoji">🏛️</div>
-        <h3>Sede Central</h3>
-        <p>Av. San Martín 450, Villa Carlos Paz</p>
-        <span class="badge">Principal</span>
-      </div>
-      <div class="card">
-        <div class="emoji">🏢</div>
-        <h3>Sede Norte</h3>
-        <p>Los Álamos 120, Barrio Norte</p>
-        <span class="badge">Lun · Mié · Vie</span>
-      </div>
-      <div class="card">
-        <div class="emoji">🏫</div>
-        <h3>Sede Sur</h3>
-        <p>Urquiza 890, Villa del Lago</p>
-        <span class="badge">Mar · Jue · Sáb</span>
-      </div>
-      <div class="card">
-        <div class="emoji">⛳</div>
-        <h3>Sede Cosquín</h3>
-        <p>Belgrano 33, Cosquín</p>
-        <span class="badge">Sáb · Dom</span>
-      </div>
+  <!-- ══ MENÚ LATERAL ══ -->
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-head">
+       <span class="topbar-logo-img">
+    <img src="logo escuela.png" alt="Escudo Chul Hak San" class="logo-escudo">
+</span>
+      <div class="s-titulo">Escuela de Taekwondo Chuk Hak San</div>
+      <div class="s-sub">Villa Carlos Paz/ Tanti/ Siquiman / Malagueño / Bialet Masse</div>
     </div>
+    <div class="sidebar-menu">
+      <button class="menu-item activo" onclick="ir('sedes','Sedes',this)">
+        <i class="ti ti-map-pin"></i> Sedes
+        <i class="ti ti-chevron-right chevron"></i>
+      </button>
+      <button class="menu-item" onclick="ir('horarios','Horarios',this)">
+        <i class="ti ti-clock"></i> Horarios
+        <i class="ti ti-chevron-right chevron"></i>
+      </button>
+      <button class="menu-item" onclick="ir('examenes','Exámenes',this)">
+        <i class="ti ti-certificate"></i> Exámenes
+        <i class="ti ti-chevron-right chevron"></i>
+      </button>
+      <button class="menu-item" onclick="ir('maestros','Maestros',this)">
+        <i class="ti ti-user"></i> Maestros
+        <i class="ti ti-chevron-right chevron"></i>
+      </button>
+      <button class="menu-item" onclick="ir('ubicacion','Ubicación',this)">
+        <i class="ti ti-location"></i> Ubicación
+        <i class="ti ti-chevron-right chevron"></i>
+      </button>
+      <button class="menu-item" onclick="ir('nosotros','Nosotros',this)">
+        <i class="ti ti-users"></i> Nosotros
+        <i class="ti ti-chevron-right chevron"></i>
+      </button>
+    </div>
+    <div class="sidebar-foot">Escuela de Taekwondo © 2026</div>
+     <div class="sidebar-foot">Pagina Creada por Tiago Delfini</div>
   </div>
 
-  <!-- HORARIOS -->
-  <div class="section" id="horarios">
-    <div class="grid">
-      <div class="card-azul">
-        <div class="cabecera"><strong>🏛️ Sede Central</strong><p>Lun · Mié · Vie</p></div>
-        <div class="cuerpo">
-          <div class="fila"><span class="muted">Infantil (5–10)</span><span class="strong">17:00 – 18:00</span></div>
-          <div class="fila"><span class="muted">Principiantes</span><span class="strong">18:00 – 19:30</span></div>
-          <div class="fila"><span class="muted">Intermedios</span><span class="strong">19:30 – 21:00</span></div>
-          <div class="fila"><span class="muted">Avanzados</span><span class="strong">21:00 – 22:30</span></div>
-        </div>
-      </div>
-      <div class="card-azul">
-        <div class="cabecera"><strong>🏢 Sede Norte</strong><p>Lun · Mié · Vie</p></div>
-        <div class="cuerpo">
-          <div class="fila"><span class="muted">Infantil (5–10)</span><span class="strong">16:30 – 17:30</span></div>
-          <div class="fila"><span class="muted">Principiantes</span><span class="strong">17:30 – 19:00</span></div>
-          <div class="fila"><span class="muted">Intermedios</span><span class="strong">19:00 – 20:30</span></div>
-        </div>
-      </div>
-      <div class="card-azul">
-        <div class="cabecera"><strong>🏫 Sede Sur</strong><p>Mar · Jue · Sáb</p></div>
-        <div class="cuerpo">
-          <div class="fila"><span class="muted">Infantil (5–10)</span><span class="strong">17:00 – 18:00</span></div>
-          <div class="fila"><span class="muted">Principiantes</span><span class="strong">18:00 – 19:30</span></div>
-          <div class="fila"><span class="muted">Avanzados</span><span class="strong">19:30 – 21:00</span></div>
-        </div>
-      </div>
-      <div class="card-azul">
-        <div class="cabecera"><strong>⛳ Sede Cosquín</strong><p>Sáb · Dom</p></div>
-        <div class="cuerpo">
-          <div class="fila"><span class="muted">Todas las edades</span><span class="strong">10:00 – 12:00</span></div>
-          <div class="fila"><span class="muted">Competición</span><span class="strong">15:00 – 17:00</span></div>
+  <!-- ══ BARRA SUPERIOR ══ -->
+  <div class="topbar">
+    <div class="topbar-izq">
+      <button class="btn-ham" id="btnHam" onclick="toggleMenu()" aria-label="Abrir menú">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="topbar-logo">
+        <span class="topbar-logo-img">
+    <img src="logo escuela.png" alt="Escudo Chul Hak San" class="logo-escudo">
+</span>
+        <div>
+          <div class="nombre">CHUL HAK SAN</div>
+          <div class="sub">Villa Carlos Paz · Córdoba</div>
         </div>
       </div>
     </div>
+    <span class="topbar-seccion" id="topbarSeccion">Sedes</span>
   </div>
 
-  <!-- EXÁMENES -->
-  <div class="section" id="examenes">
-    <div class="grid">
-      <div class="card-azul">
-        <div class="cabecera"><strong>🥋 Próximos exámenes</strong><p>Sede Central — 2026</p></div>
-        <div class="cuerpo">
-          <div class="fila"><span class="muted"><span class="cinta-dot" style="background:#FFD700"></span>Blanco → Amarillo</span><span class="strong">14 Jun</span></div>
-          <div class="fila"><span class="muted"><span class="cinta-dot" style="background:#228B22"></span>Naranja → Verde</span><span class="strong">12 Jul</span></div>
-          <div class="fila"><span class="muted"><span class="cinta-dot" style="background:#00008B"></span>Verde → Azul</span><span class="strong">12 Jul</span></div>
-          <div class="fila"><span class="muted"><span class="cinta-dot" style="background:#8B0000"></span>Azul → Rojo</span><span class="strong">20 Sep</span></div>
-          <div class="fila"><span class="muted"><span class="cinta-dot" style="background:#111"></span>Rojo → Negro</span><span class="strong">15 Nov</span></div>
-        </div>
+  <!-- ══ CONTENIDO ══ -->
+  <div class="contenido">
+
+    <!-- SEDES -->
+    <div class="section visible" id="sedes">
+      <div class="hero-banner">
+        <div><h2>Nuestras Sedes</h2><p>4 escuelas en la región de Carlos Paz y Cosquín</p></div>
+        <span class="h-emoji">🏛️</span>
       </div>
-      <div class="card-azul">
-        <div class="cabecera"><strong>📋 Requisitos</strong><p>Para rendir examen</p></div>
-        <div class="cuerpo">
-          <div class="fila"><span class="muted">Meses de práctica</span><span class="strong">Mín. 3 meses</span></div>
-          <div class="fila"><span class="muted">Asistencia</span><span class="strong">Mín. 80%</span></div>
-          <div class="fila"><span class="muted">Arancel</span><span class="strong">Consultar sede</span></div>
-          <div class="fila"><span class="muted">Inscripción</span><span class="strong">15 días antes</span></div>
-          <div class="fila"><span class="muted">Uniforme</span><span class="strong">Dobok completo</span></div>
+      <div class="grid4">
+        <div class="card">
+          <div class="sede-icon">🏛️</div>
+          <div class="sede-nombre">Sedes Carlos Paz</div>
+          <div class="sede-dir">Av. San Martín 450<br>Villa Carlos Paz</div>
+          <span class="badge">C.V Sol y Lago</span>
+          <span class="badge">Las Ensenadas</span>
+          <span class="badge">Las Malvinas</span>
+          <span class="badge">Los Algarrobos</span>
         </div>
-      </div>
-      <div class="card-azul">
-        <div class="cabecera"><strong>🏆 Competencias</strong><p>Calendario 2026</p></div>
-        <div class="cuerpo">
-          <div class="fila"><span class="muted">Interno anual</span><span class="strong">28 Jun</span></div>
-          <div class="fila"><span class="muted">Copa Córdoba</span><span class="strong">Ago 2026</span></div>
-          <div class="fila"><span class="muted">Nacional juvenil</span><span class="strong">Oct 2026</span></div>
-          <div class="fila"><span class="muted">Cierre de año</span><span class="strong">Nov 2026</span></div>
+        <div class="card">
+          <div class="sede-icon">🏢</div>
+          <div class="sede-nombre">Malagueño</div>
+          <div class="sede-dir">Los Álamos 120<br>Barrio Norte</div>
+          <span class="badge">Club Marin Ferreyra</span>
+        </div>
+        <div class="card">
+          <div class="sede-icon">🏫</div>
+          <div class="sede-nombre">Tanti/Siquiman</div>
+          <div class="sede-dir">Urquiza 890<br>Villa del Lago</div>
+          <span class="badge">Deportivo San Jose</span>
+          <span class="badge">Stadium Parador</span>
+        </div>
+        <div class="card">
+          <div class="sede-icon">⛳</div>
+          <div class="sede-nombre">Bialet Masse</div>
+          <div class="sede-dir">Belgrano 33<br>Cosquín</div>
+          <span class="badge">Club Bialet Masse</span>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- MAESTROS -->
-  <div class="section" id="maestros">
-    <div class="grid">
-      <div class="maestro-card">
-        <div class="maestro-top">
-          <div class="avatar">CR</div>
-          <div class="maestro-info">
-            <span>Carlos Rodríguez</span>
-            <small>Sede Central · Negro 4° Dan</small>
+    <!-- HORARIOS -->
+    <div class="section" id="horarios">
+      <div class="hero-banner">
+        <div><h2>Horarios</h2><p>Clases para todas las edades y niveles</p></div>
+        <span class="h-emoji">⏰</span>
+      </div>
+      <div class="grid2">
+        <div class="card-azul">
+          <div class="cabecera">🏛️ Carloz Paz <small>Lun · Mié · Vie</small></div>
+          <div class="cuerpo">
+            <div class="fila"><span class="muted">Infantil (5–10)</span><span class="strong">17:00 – 18:00</span></div>
+            <div class="fila"><span class="muted">Principiantes</span><span class="strong">18:00 – 19:30</span></div>
+            <div class="fila"><span class="muted">Intermedios</span><span class="strong">19:30 – 21:00</span></div>
+            <div class="fila"><span class="muted">Avanzados</span><span class="strong">21:00 – 22:30</span></div>
           </div>
         </div>
-        <div class="detalle"><i class="ti ti-phone"></i> +54 9 3541 10-0001</div>
-        <div class="detalle"><i class="ti ti-mail"></i> carlos@tkd.com.ar</div>
-        <div class="detalle"><i class="ti ti-brand-whatsapp"></i> WhatsApp disponible</div>
-        <div class="detalle"><i class="ti ti-calendar"></i> Lun · Mié · Vie</div>
-      </div>
-      <div class="maestro-card">
-        <div class="maestro-top">
-          <div class="avatar">ML</div>
-          <div class="maestro-info">
-            <span>Marcela López</span>
-            <small>Sede Norte · Negro 3° Dan</small>
+        <div class="card-azul">
+          <div class="cabecera">🏢 Malagueño <small>Lun · Mié · Vie</small></div>
+          <div class="cuerpo">
+            <div class="fila"><span class="muted">Infantil (5–10)</span><span class="strong">16:30 – 17:30</span></div>
+            <div class="fila"><span class="muted">Principiantes</span><span class="strong">17:30 – 19:00</span></div>
+            <div class="fila"><span class="muted">Intermedios</span><span class="strong">19:00 – 20:30</span></div>
           </div>
         </div>
-        <div class="detalle"><i class="ti ti-phone"></i> +54 9 3541 20-0002</div>
-        <div class="detalle"><i class="ti ti-mail"></i> marcela@tkd.com.ar</div>
-        <div class="detalle"><i class="ti ti-brand-whatsapp"></i> WhatsApp disponible</div>
-        <div class="detalle"><i class="ti ti-calendar"></i> Lun · Mié · Vie</div>
-      </div>
-      <div class="maestro-card">
-        <div class="maestro-top">
-          <div class="avatar">JP</div>
-          <div class="maestro-info">
-            <span>Julián Pérez</span>
-            <small>Sede Sur · Negro 2° Dan</small>
+        <div class="card-azul">
+          <div class="cabecera">🏫 Tanti/Siquiman <small>Mar · Jue · Sáb</small></div>
+          <div class="cuerpo">
+            <div class="fila"><span class="muted">Infantil (5–10)</span><span class="strong">17:00 – 18:00</span></div>
+            <div class="fila"><span class="muted">Principiantes</span><span class="strong">18:00 – 19:30</span></div>
+            <div class="fila"><span class="muted">Avanzados</span><span class="strong">19:30 – 21:00</span></div>
           </div>
         </div>
-        <div class="detalle"><i class="ti ti-phone"></i> +54 9 3541 30-0003</div>
-        <div class="detalle"><i class="ti ti-mail"></i> julian@tkd.com.ar</div>
-        <div class="detalle"><i class="ti ti-brand-whatsapp"></i> WhatsApp disponible</div>
-        <div class="detalle"><i class="ti ti-calendar"></i> Mar · Jue · Sáb</div>
-      </div>
-      <div class="maestro-card">
-        <div class="maestro-top">
-          <div class="avatar">AG</div>
-          <div class="maestro-info">
-            <span>Ana González</span>
-            <small>Sede Cosquín · Negro 3° Dan</small>
+        <div class="card-azul">
+          <div class="cabecera">⛳ Bialet Masse <small>Sáb · Dom</small></div>
+          <div class="cuerpo">
+            <div class="fila"><span class="muted">Todas las edades</span><span class="strong">10:00 – 12:00</span></div>
+            <div class="fila"><span class="muted">Competición</span><span class="strong">15:00 – 17:00</span></div>
           </div>
         </div>
-        <div class="detalle"><i class="ti ti-phone"></i> +54 9 3541 40-0004</div>
-        <div class="detalle"><i class="ti ti-mail"></i> ana@tkd.com.ar</div>
-        <div class="detalle"><i class="ti ti-brand-whatsapp"></i> WhatsApp disponible</div>
-        <div class="detalle"><i class="ti ti-calendar"></i> Sáb · Dom</div>
       </div>
     </div>
-  </div>
 
-  <!-- UBICACIÓN -->
-  <div class="section" id="ubicacion">
-    <div class="grid">
-      <div class="ubicacion-card">
-        <h3><i class="ti ti-map-pin"></i> Sede Central</h3>
-        <p class="dir">Av. San Martín 450, Villa Carlos Paz, Córdoba</p>
-        <p class="dir">Referencia: frente a la plaza principal</p>
-        <a class="map-link" href="https://maps.google.com/?q=Av.+San+Martín+450+Villa+Carlos+Paz" target="_blank">
-          <i class="ti ti-external-link"></i> Ver en Google Maps
-        </a>
+    <!-- EXÁMENES -->
+    <div class="section" id="examenes">
+      <div class="hero-banner">
+        <div><h2>Exámenes</h2><p>Calendario de exámenes y competencias 2026</p></div>
+        <span class="h-emoji">🥋</span>
       </div>
-      <div class="ubicacion-card">
-        <h3><i class="ti ti-map-pin"></i> Sede Norte</h3>
-        <p class="dir">Los Álamos 120, Barrio Norte, V. Carlos Paz</p>
-        <p class="dir">Referencia: esquina con Calle Los Pinos</p>
-        <a class="map-link" href="https://maps.google.com/?q=Los+Álamos+120+Villa+Carlos+Paz" target="_blank">
-          <i class="ti ti-external-link"></i> Ver en Google Maps
-        </a>
-      </div>
-      <div class="ubicacion-card">
-        <h3><i class="ti ti-map-pin"></i> Sede Sur</h3>
-        <p class="dir">Urquiza 890, Villa del Lago, V. Carlos Paz</p>
-        <p class="dir">Referencia: al lado del polideportivo municipal</p>
-        <a class="map-link" href="https://maps.google.com/?q=Urquiza+890+Villa+del+Lago" target="_blank">
-          <i class="ti ti-external-link"></i> Ver en Google Maps
-        </a>
-      </div>
-      <div class="ubicacion-card">
-        <h3><i class="ti ti-map-pin"></i> Sede Cosquín</h3>
-        <p class="dir">Belgrano 33, Cosquín, Córdoba</p>
-        <p class="dir">Referencia: a media cuadra del río</p>
-        <a class="map-link" href="https://maps.google.com/?q=Belgrano+33+Cosquín+Córdoba" target="_blank">
-          <i class="ti ti-external-link"></i> Ver en Google Maps
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <!-- NOSOTROS -->
-  <div class="section" id="nosotros">
-    <div class="card" style="line-height: 1.7; color: #444;">
-      <h3 style="font-size:16px;margin-bottom:.75rem">¿Quiénes somos?</h3>
-      <p>Somos una escuela de Taekwondo con más de 20 años de trayectoria en la región de Villa Carlos Paz. Formamos deportistas de todas las edades con valores de disciplina, respeto y superación personal.</p>
-      <p style="margin-top:.75rem">Nuestros instructores son cinturones negros certificados por la World Taekwondo Federation (WTF), con experiencia en competencia nacional e internacional.</p>
-      <h3 style="font-size:16px;margin-top:1.25rem;margin-bottom:.75rem">Grados disponibles</h3>
-      <div class="cinturones">
-        <span class="cinta"><span class="dot" style="background:#fff;border:1px solid #ccc"></span>Blanco</span>
-        <span class="cinta"><span class="dot" style="background:#FFD700"></span>Amarillo</span>
-        <span class="cinta"><span class="dot" style="background:#ff8c00"></span>Naranja</span>
-        <span class="cinta"><span class="dot" style="background:#228B22"></span>Verde</span>
-        <span class="cinta"><span class="dot" style="background:#00008B"></span>Azul</span>
-        <span class="cinta"><span class="dot" style="background:#8B0000"></span>Rojo</span>
-        <span class="cinta"><span class="dot" style="background:#111"></span>Negro</span>
+      <div class="grid3">
+        <div class="card-azul">
+          <div class="cabecera">🥋 Próximos exámenes <small>Sede Central — 2026</small></div>
+          <div class="cuerpo">
+            <div class="fila"><span class="muted"><span class="dot-g" style="background:#FFD700"></span>Blanco → Amarillo</span><span class="strong">14 Jun</span></div>
+            <div class="fila"><span class="muted"><span class="dot-g" style="background:#ff8c00"></span>Amarillo → Naranja</span><span class="strong">14 Jun</span></div>
+            <div class="fila"><span class="muted"><span class="dot-g" style="background:#228B22"></span>Naranja → Verde</span><span class="strong">12 Jul</span></div>
+            <div class="fila"><span class="muted"><span class="dot-g" style="background:#00008B"></span>Verde → Azul</span><span class="strong">12 Jul</span></div>
+            <div class="fila"><span class="muted"><span class="dot-g" style="background:#8B0000"></span>Azul → Rojo</span><span class="strong">20 Sep</span></div>
+            <div class="fila"><span class="muted"><span class="dot-g" style="background:#111"></span>Rojo → Negro</span><span class="strong">15 Nov</span></div>
+          </div>
+        </div>
+        <div class="card-azul">
+          <div class="cabecera">📋 Requisitos para rendir</div>
+          <div class="cuerpo">
+            <div class="fila"><span class="muted">Meses de práctica</span><span class="strong">Mín. 3</span></div>
+            <div class="fila"><span class="muted">Asistencia</span><span class="strong">Mín. 80%</span></div>
+            <div class="fila"><span class="muted">Arancel</span><span class="strong">Consultar sede</span></div>
+            <div class="fila"><span class="muted">Inscripción</span><span class="strong">15 días antes</span></div>
+            <div class="fila"><span class="muted">Uniforme</span><span class="strong">Dobok completo</span></div>
+          </div>
+        </div>
+        <div class="card-azul">
+          <div class="cabecera">🏆 Competencias 2026</div>
+          <div class="cuerpo">
+            <div class="fila"><span class="muted">Interno anual</span><span class="strong">28 Jun</span></div>
+            <div class="fila"><span class="muted">Copa Córdoba</span><span class="strong">Ago 2026</span></div>
+            <div class="fila"><span class="muted">Nacional juvenil</span><span class="strong">Oct 2026</span></div>
+            <div class="fila"><span class="muted">Cierre de año</span><span class="strong">Nov 2026</span></div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
 
-
-
-
-
-
-<!--Torneos-->
-<div class="section" id="torneos">
-    <div class="card" style="line-height: 1.7; color: #444;">
-        <h3 style="font-size: 20px; margin-bottom: 0.75rem;">Torneos</h3>
-        <p>Aqui puedes encontrar toda la informacion relacionada con los torneos de la escuela.</p>
-        <p style="font-size: 15px;"></p>
-       
+    <!-- MAESTROS -->
+    <div class="section" id="maestros">
+      <div class="hero-banner">
+        <div><h2>Nuestros Maestros</h2><p>Instructores certificados por la World Taekwondo Federation</p></div>
+        <span class="h-emoji">👨‍🏫</span>
+      </div>
+      <div class="grid2">
+        <div class="maestro-card">
+          <div class="maestro-top">
+            <div class="avatar">AD</div>
+            <div><div class="m-nombre">Andres Di Bello</div><div class="m-sub">Carlos Paz · Negro 4° Dan</div></div>
+          </div>
+          <hr class="m-divider" />
+          <div class="m-detalle"><i class="ti ti-phone"></i> +54 9 3541 10-0001</div>
+          <div class="m-detalle"><i class="ti ti-mail"></i> Andres@tkd.com.ar</div>
+          <div class="m-detalle"><i class="ti ti-brand-whatsapp"></i> WhatsApp disponible</div>
+          <div class="m-detalle"><i class="ti ti-calendar"></i> Lun · Mié · Vie</div>
+        </div>
+        <div class="maestro-card">
+          <div class="maestro-top">
+            <div class="avatar">VS</div>
+            <div><div class="m-nombre">Valentin Saez</div><div class="m-sub">Carlos paz / Tanti/Siquiman · Negro 4° Dan</div></div>
+          </div>
+          <hr class="m-divider" />
+          <div class="m-detalle"><i class="ti ti-phone"></i> +54 9 3541 20-0002</div>
+          <div class="m-detalle"><i class="ti ti-mail"></i> Valentin@tkd.com.ar</div>
+          <div class="m-detalle"><i class="ti ti-brand-whatsapp"></i> WhatsApp disponible</div>
+          <div class="m-detalle"><i class="ti ti-calendar"></i> Lun · Mié · Vie</div>
+        </div>
+        <div class="maestro-card">
+          <div class="maestro-top">
+            <div class="avatar">SS</div>
+            <div><div class="m-nombre">Santiago Saez</div><div class="m-sub">Carlos paz/ Tanti/Siquiman · Negro 3° Dan</div></div>
+          </div>
+          <hr class="m-divider" />
+          <div class="m-detalle"><i class="ti ti-phone"></i> +54 9 3541 30-0003</div>
+          <div class="m-detalle"><i class="ti ti-mail"></i> Santiago@tkd.com.ar</div>
+          <div class="m-detalle"><i class="ti ti-brand-whatsapp"></i> WhatsApp disponible</div>
+          <div class="m-detalle"><i class="ti ti-calendar"></i> Mar · Jue · Sáb</div>
+        </div>
+        <div class="maestro-card">
+          <div class="maestro-top">
+            <div class="avatar">ND</div>
+            <div><div class="m-nombre">Natalia Daris </div><div class="m-sub">Bialet Masse · Negro 2° Dan</div></div>
+          </div>
+          <hr class="m-divider" />
+          <div class="m-detalle"><i class="ti ti-phone"></i> +54 9 3541 40-0004</div>
+          <div class="m-detalle"><i class="ti ti-mail"></i> Natalia@tkd.com.ar</div>
+          <div class="m-detalle"><i class="ti ti-brand-whatsapp"></i> WhatsApp disponible</div>
+          <div class="m-detalle"><i class="ti ti-calendar"></i> Sáb · Dom</div>
+        </div>
+      </div>
     </div>
 
-</div>
+    <!-- UBICACIÓN -->
+    <div class="section" id="ubicacion">
+      <div class="hero-banner">
+        <div><h2>Ubicación</h2><p>Encontrá el salón más cercano a vos</p></div>
+        <span class="h-emoji">📍</span>
+      </div>
+      <div class="grid2">
+        <div class="mapa-card">
+          <h3>🏛️ Las Ensenadas</h3>
+          <div class="mapa-dir">Av. San Martín 450, Villa Carlos Paz, Córdoba</div>
+          <div class="mapa-dir">Referencia: frente a la plaza principal</div>
+          <a class="map-link" href="https://maps.google.com/?q=Av.+San+Martín+450+Villa+Carlos+Paz" target="_blank">
+            <i class="ti ti-external-link"></i> Ver en Google Maps
+          </a>
+        </div>
+
+
+ <div class="mapa-card">
+          <h3>🏛️ C.V Sol y Lago</h3>
+          <div class="mapa-dir">Av. San Martín 450, Villa Carlos Paz, Córdoba</div>
+          <div class="mapa-dir">Referencia: frente a la plaza principal</div>
+          <a class="map-link" href="https://maps.google.com/?q=Av.+San+Martín+450+Villa+Carlos+Paz" target="_blank">
+            <i class="ti ti-external-link"></i> Ver en Google Maps
+          </a>
+        </div>
+
+         <div class="mapa-card">
+          <h3>🏛️ Los Algarrobos</h3>
+          <div class="mapa-dir">Av. San Martín 450, Villa Carlos Paz, Córdoba</div>
+          <div class="mapa-dir">Referencia: frente a la plaza principal</div>
+          <a class="map-link" href="https://maps.google.com/?q=Av.+San+Martín+450+Villa+Carlos+Paz" target="_blank">
+            <i class="ti ti-external-link"></i> Ver en Google Maps
+          </a>
+        </div>
+
+
+ <div class="mapa-card">
+          <h3>🏛️ Las Malvinas</h3>
+          <div class="mapa-dir">Av. San Martín 450, Villa Carlos Paz, Córdoba</div>
+          <div class="mapa-dir">Referencia: frente a la plaza principal</div>
+          <a class="map-link" href="https://maps.google.com/?q=Av.+San+Martín+450+Villa+Carlos+Paz" target="_blank">
+            <i class="ti ti-external-link"></i> Ver en Google Maps
+          </a>
+        </div>
+
+        
+        <div class="mapa-card">
+          <h3>🏢 Martin Ferreyra</h3>
+          <div class="mapa-dir">Los Álamos 120, Barrio Norte, V. Carlos Paz</div>
+          <div class="mapa-dir">Referencia: esquina con Calle Los Pinos</div>
+          <a class="map-link" href="https://maps.google.com/?q=Los+Álamos+120+Villa+Carlos+Paz" target="_blank">
+            <i class="ti ti-external-link"></i> Ver en Google Maps
+          </a>
+        </div>
+        <div class="mapa-card">
+          <h3>🏫 Stadium Parador</h3>
+          <div class="mapa-dir">Urquiza 890, Villa del Lago, V. Carlos Paz</div>
+          <div class="mapa-dir">Referencia: al lado del polideportivo municipal</div>
+          <a class="map-link" href="https://maps.google.com/?q=Urquiza+890+Villa+del+Lago" target="_blank">
+            <i class="ti ti-external-link"></i> Ver en Google Maps
+          </a>
+        </div>
+        <div class="mapa-card">
+          <h3>⛳ Deportivo San Jose</h3>
+          <div class="mapa-dir">Belgrano 33, Cosquín, Córdoba</div>
+          <div class="mapa-dir">Referencia: a media cuadra del río</div>
+          <a class="map-link" href="https://maps.google.com/?q=Belgrano+33+Cosquín+Córdoba" target="_blank">
+            <i class="ti ti-external-link"></i> Ver en Google Maps
+          </a>
+        </div>
+
+        <div class="mapa-card">
+          <h3>🏛️ Bialet Masse</h3>
+          <div class="mapa-dir">Av. San Martín 450, Villa Carlos Paz, Córdoba</div>
+          <div class="mapa-dir">Referencia: frente a la plaza principal</div>
+          <a class="map-link" href="https://maps.google.com/?q=Av.+San+Martín+450+Villa+Carlos+Paz" target="_blank">
+            <i class="ti ti-external-link"></i> Ver en Google Maps
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- NOSOTROS -->
+    <div class="section" id="nosotros">
+      <div class="hero-banner">
+        <div><h2>Sobre Nosotros</h2><p>Más de 20 años formando campeones en Córdoba</p></div>
+        <span class="h-emoji">🏆</span>
+      </div>
+      <div class="card" style="font-size:15px; color:#444; line-height:1.8;">
+        <p>Somos una escuela de Taekwondo con más de 20 años de trayectoria en la región de Villa Carlos Paz. Formamos deportistas de todas las edades con valores de disciplina, respeto y superación personal.</p>
+        <p style="margin-top:14px">Nuestros instructores son cinturones negros certificados por la World Taekwondo Federation (WTF), con experiencia en competencia nacional e internacional.</p>
+        <h3 style="font-size:15px; font-weight:700; color:#e4dddd; margin-top:22px; margin-bottom:6px">Grados disponibles</h3>
+        <div class="cinturones">
+          <span class="cinta"><span class="dot" style="background:#f0ecec"></span>Blanco</span>
+          <span class="cinta"><span class="dot" style="background:#FFD700"></span>Amarillo</span>
+          <span class="cinta"><span class="dot" style="background:#ff8c00"></span>Naranja</span>
+          <span class="cinta"><span class="dot" style="background:#228B22"></span>Verde</span>
+          <span class="cinta"><span class="dot" style="background:#00008B"></span>Azul</span>
+          <span class="cinta"><span class="dot" style="background:#8B0000"></span>Rojo</span>
+          <span class="cinta"><span class="dot" style="background:#111"></span>Negro</span>
+        </div>
+      </div>
 
 
 <!-- Bloque de Preguntas Frecuentes -->
@@ -556,16 +756,6 @@
     </div>
   </div>
 
-    <div class="faq-item">
-    <button class="faq-pregunta" onclick="toggleFaq(this)">
-      ¿Que se requiere para presentarse a un examen?
-      <i class="ti ti-chevron-down"></i>
-    </button>
-    <div class="faq-respuesta">
-      <p>Es algo que depende exclusivamente del alumno, si este va frecuentemente a las clases y el profesor lo ve lo suficientemente preparado, este mismo lo convocara al lugar donde se realiza el proximo examen </p>
-    </div>
-  </div>
-
   <div class="faq-item">
     <button class="faq-pregunta" onclick="toggleFaq(this)">
       ¿Las clases son mixtas?
@@ -575,33 +765,62 @@
       <p>Sí, todas nuestras clases tanto infantiles como de adultos y juveniles son completamente mixtas, fomentando el compañerismo y el respeto mutuo entre todos los practicantes.</p>
     </div>
   </div>
+
+ <div class="faq-item">
+    <button class="faq-pregunta" onclick="toggleFaq(this)">
+      ¿Que se requiere para poder asistir a un examen?
+      <i class="ti ti-chevron-down"></i>
+    </button>
+    <div class="faq-respuesta">
+      <p>Es algo que depende exclusivamente del alumno, el profesor determina que tan preparado te encuentras para presentarte al examen</p>
+    </div>
+  </div>
+
 </div>
 
+    </div>
 
-</div>
+  </div><!-- fin .contenido -->
 
+  <script>
+    function toggleMenu() {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('overlay');
+      const btn = document.getElementById('btnHam');
+      sidebar.classList.toggle('visible');
+      overlay.classList.toggle('visible');
+      btn.classList.toggle('abierto');
+    }
 
+    function cerrarMenu() {
+      document.getElementById('sidebar').classList.remove('visible');
+      document.getElementById('overlay').classList.remove('visible');
+      document.getElementById('btnHam').classList.remove('abierto');
+    }
 
-<script>
-  function mostrar(id, btn) {
-    document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
-    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-    document.getElementById(id).classList.add('visible');
-    btn.classList.add('active');
-  }
-</script>
+    function ir(id, titulo, btn) {
+      // Mostrar sección correcta
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
+      document.getElementById(id).classList.add('visible');
+      // Actualizar título en topbar
+      document.getElementById('topbarSeccion').textContent = titulo;
+      // Marcar ítem activo en sidebar
+      document.querySelectorAll('.menu-item').forEach(b => b.classList.remove('activo'));
+      btn.classList.add('activo');
+      // Cerrar menú y volver arriba
+      cerrarMenu();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
+    // Cerrar menú con tecla Escape
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') cerrarMenu();
+    });
+  </script>
 
-<script>
-  // Tu función original para cambiar de pestaña en el menú
-  function mostrar(id, btn) {
-    document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
-    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-    document.getElementById(id).classList.add('visible');
-    btn.classList.add('active');
-  }
-
-  // 👇 NUEVA FUNCIÓN: Copia esto aquí abajo 👇
+  <script>
+ 
+  // Nueva función para abrir y cerrar preguntas
   function toggleFaq(btn) {
     const item = btn.parentElement;
     item.classList.toggle('abierto');
