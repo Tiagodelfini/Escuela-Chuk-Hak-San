@@ -346,7 +346,7 @@
     }
 
     .producto-info {
-      padding: 15px;
+      padding: 10px;
       display: flex;
       flex-direction: column;
       flex-grow: 1;
@@ -450,6 +450,21 @@
       .topbar { padding: 0 16px; }
       .topbar-logo .sub { display: none; }
     }
+
+/* Productos de la tienda */
+.tienda-img {
+  width: 100%;
+  height: 180px;       /* Altura fija para que todas las tarjetas midan lo mismo */
+  object-fit: contain; /* Evita que la foto se deforme o se estire */
+  background: #f5f5f5; /* Fondo gris claro por si la imagen tiene fondo transparente */
+  padding: 10px;       /* Margen interno para que el producto no toque los bordes */
+}
+
+
+
+
+
+
   </style>
 </head>
 <body>
@@ -765,7 +780,8 @@
       <div class="tienda-grid">
         <div class="producto-card">
           <div class="producto-badge">Oficial</div>
-          <div class="producto-foto">🥋</div> 
+          <div class=""></div> 
+          <img src="Dobok.png" alt="Dobok Oficial" class="tienda-img">
           <div class="producto-info">
             <h3>Dobok Oficial (Uniforme)</h3>
             <p class="producto-desc">Uniforme obligatorio para clases y exámenes. Tela de alta resistencia.</p>
@@ -777,7 +793,8 @@
         </div>
         <div class="producto-card">
           <div class="producto-badge">Equipo</div>
-          <div class="producto-foto">🥊</div>
+          <div class="producto-info"></div>
+          <img src="guantesRojos.png" alt="" class="tienda-img">
           <div class="producto-info">
             <h3>Protectores de Puño y Pie</h3>
             <p class="producto-desc">Kit de protección obligatorio para la práctica de lucha (Sparring).</p>
@@ -787,9 +804,44 @@
             </div>
           </div>
         </div>
+
+
+ <div class="producto-card">
+          <div class="producto-badge">Equipo</div>
+          <div class="producto-info"></div>
+          <img src="GuantesAzul.png" alt="" class="tienda-img">
+          <div class="producto-info">
+            <h3>Protectores de Puño y Pie</h3>
+            <p class="producto-desc">Kit de protección obligatorio para la práctica de lucha (Sparring).</p>
+            <div class="producto-pie">
+              <span class="producto-precio">$38.000</span>
+              <span class="producto-talle">S - M - L</span>
+            </div>
+          </div>
+        </div>
+
+
+
+          <div class="producto-card">
+          <div class="producto-badge">Indumentaria</div>
+          <div class="producto-info"></div>
+          <img src="RemeraNegra.png" alt="" class="tienda-img">
+          <div class="producto-info">
+            <h3>Remera de Entrenamiento</h3>
+            <p class="producto-desc">Remera para los días de calor y eventos especiales de la escuela.</p>
+            <div class="producto-pie">
+              <span class="producto-precio">$18.000</span>
+              <span class="producto-talle">Niños y Adultos</span>
+            </div>
+          </div>
+        </div>
+
+
+
         <div class="producto-card">
           <div class="producto-badge">Indumentaria</div>
-          <div class="producto-foto">👕</div>
+          <div class="producto-info"></div>
+          <img src="Remera.png" alt="" class="tienda-img">
           <div class="producto-info">
             <h3>Remera de Entrenamiento</h3>
             <p class="producto-desc">Remera para los días de calor y eventos especiales de la escuela.</p>
@@ -842,6 +894,38 @@
               <p>¡Para nada! El estado físico, la fuerza y la flexibilidad se van desarrollando clase a clase de forma progresiva.</p>
             </div>
           </div>
+
+ <div class="faq-item">
+            <button class="faq-pregunta" onclick="toggleFaq(this)">
+              ¿Como puedo asistir al el proximo examen?
+              <i class="ti ti-chevron-down"></i>
+            </button>
+            <div class="faq-respuesta">
+              <p>Eso es algo que depende del alumno y el profesor, el alumno tiene que asistir a la mayor cantidad de clases posibles y el profesor es el que determina si estas listo para rendir en el examen mas proximo.</p>
+            </div>
+          </div>
+
+
+           <div class="faq-item">
+            <button class="faq-pregunta" onclick="toggleFaq(this)">
+              ¿Que tipo de ropa se utiliza para las clases?
+              <i class="ti ti-chevron-down"></i>
+            </button>
+            <div class="faq-respuesta">
+              <p>Para las primeras clases, se recomienda ropa que sea deportiva o comoda, ya cuando el alumno adquiera el traje de la escuela se recominda llevarlo todas las veces que sea posible.</p>
+            </div>
+          </div>
+
+ <div class="faq-item">
+            <button class="faq-pregunta" onclick="toggleFaq(this)">
+              ¿Que beneficios tiene el practicar esta disiplina?
+              <i class="ti ti-chevron-down"></i>
+            </button>
+            <div class="faq-respuesta">
+              <p>El practicar esta disiplina ofrece el poder conocer este arte marcial, practicar la defensa personal, conocer a personas nuevas y al mismo tiempo divertirse.</p>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
