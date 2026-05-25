@@ -69,13 +69,21 @@
       align-items: center;
       gap: 10px;
     }
-    .topbar-logo .emoji { font-size: 26px; }
     .topbar-logo .nombre { color: white; font-size: 17px; font-weight: 600; }
     .topbar-logo .sub { color: rgba(255,255,255,0.5); font-size: 11px; }
 
     .topbar-seccion {
       color: rgba(255,255,255,0.6);
       font-size: 14px;
+    }
+
+    /* Escudo de la escuela */
+    .logo-escudo {
+      height: 38px;          
+      width: auto;           
+      object-fit: contain;   
+      margin-right: 4px;    
+      vertical-align: middle;
     }
 
     /* ══════════════════════════════
@@ -118,8 +126,7 @@
       padding: 32px 22px 18px;
       border-bottom: 1px solid rgba(255,255,255,0.1);
     }
-    .sidebar-head .s-emoji { font-size: 36px; margin-bottom: 8px; display: block; }
-    .sidebar-head .s-titulo { color: white; font-size: 18px; font-weight: 700; }
+    .sidebar-head .s-titulo { color: white; font-size: 18px; font-weight: 700; margin-top: 10px; }
     .sidebar-head .s-sub { color: rgba(255,255,255,0.45); font-size: 12px; margin-top: 3px; }
 
     .sidebar-menu { flex: 1; padding: 10px 0; }
@@ -155,7 +162,7 @@
     }
 
     .sidebar-foot {
-      padding: 16px 22px;
+      padding: 12px 22px;
       border-top: 1px solid rgba(255,255,255,0.1);
       font-size: 11px;
       color: rgba(255,255,255,0.3);
@@ -292,40 +299,101 @@
     .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
     .dot-g { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 5px; vertical-align: middle; }
 
-    /* ══════════════════════════════
-       RESPONSIVE
-    ══════════════════════════════ */
-    @media (max-width: 900px) {
-      .grid4 { grid-template-columns: repeat(2, 1fr); }
-      .grid3 { grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (max-width: 600px) {
-      .contenido { padding: 0 14px; margin: 16px auto; }
-      .grid2, .grid3, .grid4 { grid-template-columns: 1fr; }
-      .hero-banner { padding: 20px; }
-      .hero-banner h2 { font-size: 20px; }
-      .hero-banner .h-emoji { font-size: 36px; }
-      .sidebar { width: 78%; }
-      .topbar { padding: 0 16px; }
-      .topbar-logo .sub { display: none; }
+    /* ── TIENDA DE INDUMENTARIA ── */
+    .tienda-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 15px;
     }
 
-    /* Controla el tamaño del escudo para que no se desarme la barra */
-.logo-escudo {
-    height: 38px;          /* Limita el alto máximo para que entre en la barra */
-    width: auto;           /* Hace que el ancho se ajuste automáticamente sin deformarse */
-    object-fit: contain;   /* Asegura que la imagen mantenga su proporción perfecta */
-    margin-right: 12px;    /* Separa un poquito el escudo del texto "CHUL HAK SAN" */
-    vertical-align: middle;/* Alinea el escudo perfectamente al centro con el texto de al lado */
-}
+    .producto-card {
+      background: white; 
+      border: 1px solid var(--borde);
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
 
+    .producto-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    }
 
-/* ── PREGUNTAS FRECUENTES (FAQ) ── */
+    .producto-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: var(--azul);
+      color: white;
+      padding: 4px 8px;
+      font-size: 11px;
+      font-weight: bold;
+      border-radius: 4px;
+      z-index: 1;
+    }
+
+    .producto-foto {
+      height: 160px;
+      background: #f5f5f5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 50px;
+    }
+
+    .producto-info {
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .producto-info h3 {
+      font-size: 15px;
+      margin-bottom: 8px;
+      color: #111;
+    }
+
+    .producto-desc {
+      font-size: 12.5px;
+      color: var(--muted);
+      line-height: 1.4;
+      margin-bottom: 15px;
+      flex-grow: 1;
+    }
+
+    .producto-pie {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid #f0f0f0;
+      padding-top: 10px;
+    }
+
+    .producto-precio {
+      font-size: 16px;
+      font-weight: bold;
+      color: #2e7d32;
+    }
+
+    .producto-talle {
+      font-size: 11px;
+      color: #666;
+      background: #f0f0f0;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    /* ── PREGUNTAS FRECUENTES (FAQ) ── */
     .faq-contenedor {
       display: flex;
       flex-direction: column;
       gap: 10px;
-      margin-top: 10px;
+      margin-top: 15px;
     }
     .faq-item {
       border: 1px solid #ddd;
@@ -348,14 +416,8 @@
       align-items: center;
       transition: background 0.2s;
     }
-    .faq-pregunta:hover {
-      background: #f9f9f9;
-    }
-    .faq-pregunta i {
-      transition: transform 0.2s;
-      font-size: 16px;
-      color: var(--azul);
-    }
+    .faq-pregunta:hover { background: #f9f9f9; }
+    .faq-pregunta i { transition: transform 0.2s; font-size: 16px; color: var(--azul); }
     .faq-respuesta {
       max-height: 0;
       overflow: hidden;
@@ -368,32 +430,40 @@
       color: #555;
       line-height: 1.5;
     }
-    /* Clase que usaremos con JavaScript para abrir la pregunta */
-    .faq-item.abierto .faq-respuesta {
-      max-height: 200px; /* Permite que se despliegue */
-    }
-    .faq-item.abierto .faq-pregunta i {
-      transform: rotate(180deg); /* Gira la flecha hacia arriba */
-    }
+    .faq-item.abierto .faq-respuesta { max-height: 200px; }
+    .faq-item.abierto .faq-pregunta i { transform: rotate(180deg); }
 
+    /* ══════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════ */
+    @media (max-width: 900px) {
+      .grid4 { grid-template-columns: repeat(2, 1fr); }
+      .grid3 { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .contenido { padding: 0 14px; margin: 16px auto; }
+      .grid2, .grid3, .grid4 { grid-template-columns: 1fr; }
+      .hero-banner { padding: 20px; }
+      .hero-banner h2 { font-size: 20px; }
+      .hero-banner .h-emoji { font-size: 36px; }
+      .sidebar { width: 78%; }
+      .topbar { padding: 0 16px; }
+      .topbar-logo .sub { display: none; }
+    }
   </style>
 </head>
 <body>
 
-  <!-- ══ OVERLAY ══ -->
   <div class="overlay" id="overlay" onclick="cerrarMenu()"></div>
 
-  <!-- ══ MENÚ LATERAL ══ -->
   <div class="sidebar" id="sidebar">
     <div class="sidebar-head">
-       <span class="topbar-logo-img">
-    <img src="logo escuela.png" alt="Escudo Chul Hak San" class="logo-escudo">
-</span>
+      <img src="logo escuela.png" alt="Escudo Chul Hak San" class="logo-escudo">
       <div class="s-titulo">Escuela de Taekwondo Chuk Hak San</div>
-      <div class="s-sub">Villa Carlos Paz/ Tanti/ Siquiman / Malagueño / Bialet Masse</div>
+      <div class="s-sub">Villa Carlos Paz / Tanti / Siquiman / Malagueño / Bialet Masse</div>
     </div>
     <div class="sidebar-menu">
-      <button class="menu-item activo" onclick="ir('sedes','Sedes',this)">
+      <button class="menu-item activo" onclick="ir('sedes','Nuestras Sedes',this)">
         <i class="ti ti-map-pin"></i> Sedes
         <i class="ti ti-chevron-right chevron"></i>
       </button>
@@ -405,7 +475,7 @@
         <i class="ti ti-certificate"></i> Exámenes
         <i class="ti ti-chevron-right chevron"></i>
       </button>
-      <button class="menu-item" onclick="ir('maestros','Maestros',this)">
+      <button class="menu-item" onclick="ir('maestros','Nuestros Maestros',this)">
         <i class="ti ti-user"></i> Maestros
         <i class="ti ti-chevron-right chevron"></i>
       </button>
@@ -413,38 +483,37 @@
         <i class="ti ti-location"></i> Ubicación
         <i class="ti ti-chevron-right chevron"></i>
       </button>
-      <button class="menu-item" onclick="ir('nosotros','Nosotros',this)">
+      <button class="menu-item" onclick="ir('tienda','Tienda Oficial',this)">
+        <i class="ti ti-shopping-cart"></i> Tienda
+        <i class="ti ti-chevron-right chevron"></i>
+      </button>
+      <button class="menu-item" onclick="ir('nosotros','Sobre Nosotros',this)">
         <i class="ti ti-users"></i> Nosotros
         <i class="ti ti-chevron-right chevron"></i>
       </button>
     </div>
     <div class="sidebar-foot">Escuela de Taekwondo © 2026</div>
-     <div class="sidebar-foot">Pagina Creada por Tiago Delfini</div>
+    <div class="sidebar-foot">Página Creada por Tiago Delfini</div>
   </div>
 
-  <!-- ══ BARRA SUPERIOR ══ -->
   <div class="topbar">
     <div class="topbar-izq">
       <button class="btn-ham" id="btnHam" onclick="toggleMenu()" aria-label="Abrir menú">
         <span></span><span></span><span></span>
       </button>
       <div class="topbar-logo">
-        <span class="topbar-logo-img">
-    <img src="logo escuela.png" alt="Escudo Chul Hak San" class="logo-escudo">
-</span>
+        <img src="logo escuela.png" alt="Escudo Chul Hak San" class="logo-escudo">
         <div>
           <div class="nombre">CHUL HAK SAN</div>
           <div class="sub">Villa Carlos Paz · Córdoba</div>
         </div>
       </div>
     </div>
-    <span class="topbar-seccion" id="topbarSeccion">Sedes</span>
+    <span class="topbar-seccion" id="topbarSeccion">Nuestras Sedes</span>
   </div>
 
-  <!-- ══ CONTENIDO ══ -->
   <div class="contenido">
 
-    <!-- SEDES -->
     <div class="section visible" id="sedes">
       <div class="hero-banner">
         <div><h2>Nuestras Sedes</h2><p>4 escuelas en la región de Carlos Paz y Cosquín</p></div>
@@ -482,7 +551,6 @@
       </div>
     </div>
 
-    <!-- HORARIOS -->
     <div class="section" id="horarios">
       <div class="hero-banner">
         <div><h2>Horarios</h2><p>Clases para todas las edades y niveles</p></div>
@@ -524,7 +592,6 @@
       </div>
     </div>
 
-    <!-- EXÁMENES -->
     <div class="section" id="examenes">
       <div class="hero-banner">
         <div><h2>Exámenes</h2><p>Calendario de exámenes y competencias 2026</p></div>
@@ -564,10 +631,9 @@
       </div>
     </div>
 
-    <!-- MAESTROS -->
     <div class="section" id="maestros">
       <div class="hero-banner">
-        <div><h2>Nuestros Maestros</h2><p>Instructores certificados por la World Taekwondo Federation</p></div>
+        <div><h2>Nuestros Maestros</h2><p>Instructores certificados por la Federación</p></div>
         <span class="h-emoji">👨‍🏫</span>
       </div>
       <div class="grid2">
@@ -618,7 +684,6 @@
       </div>
     </div>
 
-    <!-- UBICACIÓN -->
     <div class="section" id="ubicacion">
       <div class="hero-banner">
         <div><h2>Ubicación</h2><p>Encontrá el salón más cercano a vos</p></div>
@@ -629,46 +694,39 @@
           <h3>🏛️ Las Ensenadas</h3>
           <div class="mapa-dir">Av. San Martín 450, Villa Carlos Paz, Córdoba</div>
           <div class="mapa-dir">Referencia: frente a la plaza principal</div>
-          <a class="map-link" href="https://maps.google.com/?q=Av.+San+Martín+450+Villa+Carlos+Paz" target="_blank">
+          <a class="map-link" href="https://maps.google.com" target="_blank">
             <i class="ti ti-external-link"></i> Ver en Google Maps
           </a>
         </div>
-
-
- <div class="mapa-card">
+        <div class="mapa-card">
           <h3>🏛️ C.V Sol y Lago</h3>
           <div class="mapa-dir">Av. San Martín 450, Villa Carlos Paz, Córdoba</div>
           <div class="mapa-dir">Referencia: frente a la plaza principal</div>
-          <a class="map-link" href="https://maps.google.com/?q=Av.+San+Martín+450+Villa+Carlos+Paz" target="_blank">
+          <a class="map-link" href="https://maps.google.com" target="_blank">
             <i class="ti ti-external-link"></i> Ver en Google Maps
           </a>
         </div>
-
-         <div class="mapa-card">
+        <div class="mapa-card">
           <h3>🏛️ Los Algarrobos</h3>
           <div class="mapa-dir">Av. San Martín 450, Villa Carlos Paz, Córdoba</div>
           <div class="mapa-dir">Referencia: frente a la plaza principal</div>
-          <a class="map-link" href="https://maps.google.com/?q=Av.+San+Martín+450+Villa+Carlos+Paz" target="_blank">
+          <a class="map-link" href="https://maps.google.com" target="_blank">
             <i class="ti ti-external-link"></i> Ver en Google Maps
           </a>
         </div>
-
-
- <div class="mapa-card">
+        <div class="mapa-card">
           <h3>🏛️ Las Malvinas</h3>
           <div class="mapa-dir">Av. San Martín 450, Villa Carlos Paz, Córdoba</div>
           <div class="mapa-dir">Referencia: frente a la plaza principal</div>
-          <a class="map-link" href="https://maps.google.com/?q=Av.+San+Martín+450+Villa+Carlos+Paz" target="_blank">
+          <a class="map-link" href="https://maps.google.com" target="_blank">
             <i class="ti ti-external-link"></i> Ver en Google Maps
           </a>
         </div>
-
-        
         <div class="mapa-card">
           <h3>🏢 Martin Ferreyra</h3>
           <div class="mapa-dir">Los Álamos 120, Barrio Norte, V. Carlos Paz</div>
           <div class="mapa-dir">Referencia: esquina con Calle Los Pinos</div>
-          <a class="map-link" href="https://maps.google.com/?q=Los+Álamos+120+Villa+Carlos+Paz" target="_blank">
+          <a class="map-link" href="https://maps.google.com" target="_blank">
             <i class="ti ti-external-link"></i> Ver en Google Maps
           </a>
         </div>
@@ -676,7 +734,7 @@
           <h3>🏫 Stadium Parador</h3>
           <div class="mapa-dir">Urquiza 890, Villa del Lago, V. Carlos Paz</div>
           <div class="mapa-dir">Referencia: al lado del polideportivo municipal</div>
-          <a class="map-link" href="https://maps.google.com/?q=Urquiza+890+Villa+del+Lago" target="_blank">
+          <a class="map-link" href="https://maps.google.com" target="_blank">
             <i class="ti ti-external-link"></i> Ver en Google Maps
           </a>
         </div>
@@ -684,23 +742,66 @@
           <h3>⛳ Deportivo San Jose</h3>
           <div class="mapa-dir">Belgrano 33, Cosquín, Córdoba</div>
           <div class="mapa-dir">Referencia: a media cuadra del río</div>
-          <a class="map-link" href="https://maps.google.com/?q=Belgrano+33+Cosquín+Córdoba" target="_blank">
+          <a class="map-link" href="https://maps.google.com" target="_blank">
             <i class="ti ti-external-link"></i> Ver en Google Maps
           </a>
         </div>
-
         <div class="mapa-card">
           <h3>🏛️ Bialet Masse</h3>
           <div class="mapa-dir">Av. San Martín 450, Villa Carlos Paz, Córdoba</div>
           <div class="mapa-dir">Referencia: frente a la plaza principal</div>
-          <a class="map-link" href="https://maps.google.com/?q=Av.+San+Martín+450+Villa+Carlos+Paz" target="_blank">
+          <a class="map-link" href="https://maps.google.com" target="_blank">
             <i class="ti ti-external-link"></i> Ver en Google Maps
           </a>
         </div>
       </div>
     </div>
 
-    <!-- NOSOTROS -->
+    <div class="section" id="tienda">
+      <div class="hero-banner">
+        <div><h2>Tienda Oficial</h2><p>Equipamiento e indumentaria de la escuela Chul Hak San</p></div>
+        <span class="h-emoji">🛒</span>
+      </div>
+      <div class="tienda-grid">
+        <div class="producto-card">
+          <div class="producto-badge">Oficial</div>
+          <div class="producto-foto">🥋</div> 
+          <div class="producto-info">
+            <h3>Dobok Oficial (Uniforme)</h3>
+            <p class="producto-desc">Uniforme obligatorio para clases y exámenes. Tela de alta resistencia.</p>
+            <div class="producto-pie">
+              <span class="producto-precio">$45.000</span>
+              <span class="producto-talle">Talles: 1 al 5</span>
+            </div>
+          </div>
+        </div>
+        <div class="producto-card">
+          <div class="producto-badge">Equipo</div>
+          <div class="producto-foto">🥊</div>
+          <div class="producto-info">
+            <h3>Protectores de Puño y Pie</h3>
+            <p class="producto-desc">Kit de protección obligatorio para la práctica de lucha (Sparring).</p>
+            <div class="producto-pie">
+              <span class="producto-precio">$38.000</span>
+              <span class="producto-talle">S - M - L</span>
+            </div>
+          </div>
+        </div>
+        <div class="producto-card">
+          <div class="producto-badge">Indumentaria</div>
+          <div class="producto-foto">👕</div>
+          <div class="producto-info">
+            <h3>Remera de Entrenamiento</h3>
+            <p class="producto-desc">Remera para los días de calor y eventos especiales de la escuela.</p>
+            <div class="producto-pie">
+              <span class="producto-precio">$18.000</span>
+              <span class="producto-talle">Niños y Adultos</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="section" id="nosotros">
       <div class="hero-banner">
         <div><h2>Sobre Nosotros</h2><p>Más de 20 años formando campeones en Córdoba</p></div>
@@ -708,10 +809,11 @@
       </div>
       <div class="card" style="font-size:15px; color:#444; line-height:1.8;">
         <p>Somos una escuela de Taekwondo con más de 20 años de trayectoria en la región de Villa Carlos Paz. Formamos deportistas de todas las edades con valores de disciplina, respeto y superación personal.</p>
-        <p style="margin-top:14px">Nuestros instructores son cinturones negros certificados por la World Taekwondo Federation (WTF), con experiencia en competencia nacional e internacional.</p>
-        <h3 style="font-size:15px; font-weight:700; color:#e4dddd; margin-top:22px; margin-bottom:6px">Grados disponibles</h3>
+        <p style="margin-top:14px">Nuestros instructores son cinturones negros certificados por la Federación Chul Hak San, con experiencia en competencia nacional e internacional.</p>
+        
+        <h3 style="font-size:15px; font-weight:700; color:#333; margin-top:22px; margin-bottom:6px">Grados disponibles</h3>
         <div class="cinturones">
-          <span class="cinta"><span class="dot" style="background:#f0ecec"></span>Blanco</span>
+          <span class="cinta"><span class="dot" style="background:#fff; border:1px solid #ccc"></span>Blanco</span>
           <span class="cinta"><span class="dot" style="background:#FFD700"></span>Amarillo</span>
           <span class="cinta"><span class="dot" style="background:#ff8c00"></span>Naranja</span>
           <span class="cinta"><span class="dot" style="background:#228B22"></span>Verde</span>
@@ -719,77 +821,36 @@
           <span class="cinta"><span class="dot" style="background:#8B0000"></span>Rojo</span>
           <span class="cinta"><span class="dot" style="background:#111"></span>Negro</span>
         </div>
+
+        <h3 style="font-size:15px; font-weight:700; color:#333; margin-top:22px; margin-bottom:6px">Preguntas Frecuentes</h3>
+        <div class="faq-contenedor">
+          <div class="faq-item">
+            <button class="faq-pregunta" onclick="toggleFaq(this)">
+              ¿A qué edad se puede empezar a entrenar?
+              <i class="ti ti-chevron-down"></i>
+            </button>
+            <div class="faq-respuesta">
+              <p>En nuestra escuela recibimos alumnos a partir de los 5 años en las clases infantiles. No hay límite de edad para los grupos de adultos.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-pregunta" onclick="toggleFaq(this)">
+              ¿Necesito tener estado físico previo?
+              <i class="ti ti-chevron-down"></i>
+            </button>
+            <div class="faq-respuesta">
+              <p>¡Para nada! El estado físico, la fuerza y la flexibilidad se van desarrollando clase a clase de forma progresiva.</p>
+            </div>
+          </div>
+        </div>
       </div>
-
-
-<!-- Bloque de Preguntas Frecuentes -->
-<h3 style="font-size:16px; margin-top:1.25rem; margin-bottom:.75rem">Preguntas Frecuentes</h3>
-
-<div class="faq-contenedor">
-  <div class="faq-item">
-    <button class="faq-pregunta" onclick="toggleFaq(this)">
-      ¿A qué edad se puede empezar a entrenar?
-      <i class="ti ti-chevron-down"></i>
-    </button>
-    <div class="faq-respuesta">
-      <p>En nuestra escuela recibimos alumnos a partir de los 5 años en las clases infantiles. No hay límite de edad para los grupos de adultos; el entrenamiento se adapta a las capacidades de cada persona.</p>
-    </div>
-  </div>
-
-  <div class="faq-item">
-    <button class="faq-pregunta" onclick="toggleFaq(this)">
-      ¿Necesito tener estado físico previo o flexibilidad?
-      <i class="ti ti-chevron-down"></i>
-    </button>
-    <div class="faq-respuesta">
-      <p>¡Para nada! El estado físico, la fuerza y la flexibilidad se van desarrollando clase a clase de forma progresiva. Cada alumno avanza a su propio ritmo bajo la guía del instructor.</p>
-    </div>
-  </div>
-
-  <div class="faq-item">
-    <button class="faq-pregunta" onclick="toggleFaq(this)">
-      ¿Cómo tengo que ir vestido a mi primera clase?
-      <i class="ti ti-chevron-down"></i>
-    </button>
-    <div class="faq-respuesta">
-      <p>Para tus clases de prueba puedes venir con ropa deportiva cómoda (remera y jogging o calza) y una botellita de agua. Entrenamos descalzos sobre el piso de goma (piso encastrable o tatami). Una vez que te inscribes, te indicaremos cómo adquirir tu uniforme oficial (Dobok).</p>
-    </div>
-  </div>
-
-  <div class="faq-item">
-    <button class="faq-pregunta" onclick="toggleFaq(this)">
-      ¿Las clases son mixtas?
-      <i class="ti ti-chevron-down"></i>
-    </button>
-    <div class="faq-respuesta">
-      <p>Sí, todas nuestras clases tanto infantiles como de adultos y juveniles son completamente mixtas, fomentando el compañerismo y el respeto mutuo entre todos los practicantes.</p>
-    </div>
-  </div>
-
- <div class="faq-item">
-    <button class="faq-pregunta" onclick="toggleFaq(this)">
-      ¿Que se requiere para poder asistir a un examen?
-      <i class="ti ti-chevron-down"></i>
-    </button>
-    <div class="faq-respuesta">
-      <p>Es algo que depende exclusivamente del alumno, el profesor determina que tan preparado te encuentras para presentarte al examen</p>
-    </div>
-  </div>
-
-</div>
-
     </div>
 
-  </div><!-- fin .contenido -->
-
-  <script>
+  </div> <script>
     function toggleMenu() {
-      const sidebar = document.getElementById('sidebar');
-      const overlay = document.getElementById('overlay');
-      const btn = document.getElementById('btnHam');
-      sidebar.classList.toggle('visible');
-      overlay.classList.toggle('visible');
-      btn.classList.toggle('abierto');
+      document.getElementById('sidebar').classList.toggle('visible');
+      document.getElementById('overlay').classList.toggle('visible');
+      document.getElementById('btnHam').classList.toggle('abierto');
     }
 
     function cerrarMenu() {
@@ -798,34 +859,21 @@
       document.getElementById('btnHam').classList.remove('abierto');
     }
 
-    function ir(id, titulo, btn) {
-      // Mostrar sección correcta
+    function ir(idSeccion, nombreSeccion, boton) {
       document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
-      document.getElementById(id).classList.add('visible');
-      // Actualizar título en topbar
-      document.getElementById('topbarSeccion').textContent = titulo;
-      // Marcar ítem activo en sidebar
       document.querySelectorAll('.menu-item').forEach(b => b.classList.remove('activo'));
-      btn.classList.add('activo');
-      // Cerrar menú y volver arriba
+      
+      document.getElementById(idSeccion).classList.add('visible');
+      if(boton) boton.classList.add('activo');
+      
+      document.getElementById('topbarSeccion').innerText = nombreSeccion;
       cerrarMenu();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // Cerrar menú con tecla Escape
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') cerrarMenu();
-    });
+    function toggleFaq(btn) {
+      const item = btn.parentElement;
+      item.classList.toggle('abierto');
+    }
   </script>
-
-  <script>
- 
-  // Nueva función para abrir y cerrar preguntas
-  function toggleFaq(btn) {
-    const item = btn.parentElement;
-    item.classList.toggle('abierto');
-  }
-</script>
-
 </body>
 </html>
