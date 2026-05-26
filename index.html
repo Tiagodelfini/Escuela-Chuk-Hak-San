@@ -1442,13 +1442,13 @@
 /* ══════════════════════════════════════
    DATOS INICIALES
 ══════════════════════════════════════ */
-const ADMIN = { usuario:'tiago.delfini', pass:'admin1234', nombre:'Tiago Delfini', rol:'Administrador General' }
+const ADMIN = { usuario:'tiago.delfini', pass:'admin1111', nombre:'Tiago Delfini', rol:'Administrador General' }
 
 let MAESTROS = {
-  'santiago.saez':{ pass:'tkd1235', nombre:'Santiago Saez', sede:'Carlos Paz - Malagueño - Tanti - Siquiman' },
-  'valentin.saez':   { pass:'tkd1234', nombre:'Valentin Saez',    sede:'Carlos paz - Tanti' },
-  'andres.dibello':    { pass:'tkd1234', nombre:'Andrés Di bello',     sede:'Carlos Paz'     },
-  'natalia.daris':    { pass:'tkd1234', nombre:'Natalia Daris',     sede:'Carlos paz - Bialet Masse' }
+  'santiago.saez':{ pass:'tkd1235', nombre:'Santiago Saez', sede:'Maestro en: Carlos Paz - Malagueño - Tanti - Siquiman' },
+  'valentin.saez':   { pass:'tkd1234', nombre:'Valentin Saez',    sede:'Maestro en : Carlos paz - Tanti' },
+  'andres.dibello':    { pass:'tkd1234', nombre:'Andrés Di bello',     sede:'Maestro en: Carlos Paz'   },
+  'natalia.daris':    { pass:'tkd1234', nombre:'Natalia Daris',     sede:'Maestro en: Carlos paz - Bialet Masse' }
 }
 
 const CINTURONES = {
@@ -1466,7 +1466,7 @@ const LOGROS = [
   { id:'l2', nombre:'Constante',          desc:'15 clases asistidas',  clases:15,  icono:'ti-flame'  },
   { id:'l3', nombre:'Dedicado',           desc:'30 clases asistidas',  clases:30,  icono:'ti-star'   },
   { id:'l4', nombre:'Guerrero',           desc:'50 clases asistidas',  clases:50,  icono:'ti-sword'  },
-  { id:'l5', nombre:'Maestro del salon', desc:'100 clases asistidas', clases:100, icono:'ti-trophy' }
+  { id:'l5', nombre:'Proximo Maestro', desc:'100 clases asistidas', clases:100, icono:'ti-trophy' }
 ]
 
 /* ══════════════════════════════════════
@@ -1637,7 +1637,7 @@ function renderStats(){
 
 /* ── Dashboard stats (admin) ── */
 function renderDashStats(){
-  const sedes=['Sede Central','Sede Norte','Tanti','Sede Bialte Masse']
+  const sedes=['Carlos Paz','Malagueño','Tanti/Siquiman','Sede Bialte Masse']
   const totalM=Object.keys(MAESTROS).length
   document.getElementById('dash-stats').innerHTML=`
     <div class="stat-card"><div class="sc-label">Total alumnos</div><div class="sc-valor">${alumnos.length}</div><div class="sc-sub">toda la escuela</div></div>
@@ -1651,7 +1651,7 @@ function renderDashStats(){
    GRÁFICOS (admin)
 ══════════════════════════════════════ */
 function renderGraficos(){
-  const sedes=['Sede Carlos Paz','Malagueño','Tanti/Siquiman','Sede Bialte Masse']
+  const sedes=['Carlos Paz','Malagueño','Tanti/Siquiman','Bialte Masse']
   const cintNames=['blanco','amarillo','naranja','verde','azul','rojo','negro']
   const cintColors=['#e0e0e0','#FFD700','#ff8c00','#228B22','#00008B','#8B0000','#111']
 
