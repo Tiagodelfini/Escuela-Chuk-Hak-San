@@ -8,11 +8,6 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-*{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'Segoe UI',sans-serif;background:#eaeaea;min-height:100vh}
-    :root{--azul:#1a2a4a;--azul2:#243560;--borde:#e0e0e0;--muted:#666;--verde:#15803d;--rojo:#b91c1c}
-
-
 
 
     .screen{display:none}.screen.visible{display:block}
@@ -162,7 +157,10 @@
 
 
 
+
+
     
+
     body {
       font-family: 'Segoe UI', sans-serif;
       background: #eaeaea;
@@ -618,327 +616,124 @@
 
 
 
-/* ── COMPONENTES NUEVOS PARA EL SISTEMA DE GESTIÓN y LOGIN ── */
-    :root {
-      --azul-btn: #2563eb;
-      --verde: #15803d;
-      --rojo: #b91c1c;
-    }
-    .login-page{min-height:calc(100vh - 100px);display:flex;align-items:center;justify-content:center;padding:20px}
-    .login-card{background:white;border:1px solid var(--borde);border-radius:16px;padding:2.5rem;width:100%;max-width:400px;box-shadow:0 4px 6px rgba(0,0,0,0.02)}
-    .login-header{text-align:center;margin-bottom:2rem}
-    .login-logo{width:64px;height:64px;background:#f0f4ff;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px auto;font-size:28px;color:var(--azul)}
-    .login-title{font-size:22px;font-weight:700;color:#111}
-    .login-subtitle{font-size:13px;color:var(--muted);margin-top:4px}
-    .tabs{display:flex;gap:4px;background:#dfdfdf;padding:4px;border-radius:10px;margin-bottom:16px}
-    .tab{flex:1;background:none;border:none;padding:8px 4px;font-size:12px;font-weight:700;color:var(--muted);border-radius:7px;cursor:pointer;text-align:center}
-    .tab.activo{background:white;color:#111;box-shadow:0 2px 4px rgba(0,0,0,0.05)}
-    .tab-content{display:none}.tab-content.visible{display:block}
-    .stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:20px}
-    .stat-card{background:white;border:1px solid var(--borde);border-radius:12px;padding:14px 16px}
-    .sc-label{font-size:12px;color:var(--muted);margin-bottom:4px}
-    .sc-valor{font-size:26px;font-weight:700;color:#111}
-    .sc-sub{font-size:11px;color:var(--muted);margin-top:2px}
-    .card{background:white;border:1px solid var(--borde);border-radius:14px;padding:20px;margin-bottom:16px}
-    .card-title{font-size:15px;font-weight:700;color:#111;margin-bottom:16px;display:flex;align-items:center;gap:8px}
-    .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:14px}
-    .fg-label{font-size:11px;color:var(--muted);display:block;margin-bottom:4px;font-weight:700;text-transform:uppercase}
-    .fg-input,.fg-select{width:100%;padding:9px 11px;border:1px solid var(--borde);border-radius:9px;font-size:13px;outline:none;background:#f9f9f9}
-    .fg-input:focus,.fg-select:focus{border-color:var(--azul);background:white}
-    .tabla-wrap{margin:0 -20px;overflow-x:auto;padding:0 20px}
-    table{width:100%;border-collapse:collapse;font-size:13px}
-    thead th{text-align:left;padding:8px 10px;font-size:11px;color:var(--muted);border-bottom:1px solid #eee;font-weight:700;text-transform:uppercase}
-    tbody td{padding:10px;border-bottom:1px solid #f5f5f5;color:#111;vertical-align:middle}
-    .asist-btns{display:flex;gap:6px}
-    .btn-p,.btn-a{width:38px;height:34px;border-radius:8px;border:1px solid var(--borde);background:white;font-weight:700;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center}
-    .btn-p.sel{background:#dcfce7;border-color:#16a34a;color:#15803d}
-    .btn-a.sel{background:#fee2e2;border-color:#dc2626;color:#b91c1c}
-    .chart-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:16px}
-    .chart-card{background:white;border:1px solid var(--borde);border-radius:14px;padding:20px}
-    .chart-card h3{font-size:14px;font-weight:700;margin-bottom:14px;color:#333}
-    .btn-primario{width:100%;background:var(--azul);color:white;border:none;padding:11px;border-radius:9px;font-size:14px;font-weight:600;cursor:pointer}
-    .btn-azul{background:var(--azul-btn);color:white;border:none;padding:9px 14px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer}
-    .btn-verde{background:var(--verde);color:white;border:none;padding:9px 14px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer}
-
 
 
   </style>
 </head>
 <body>
 
-
-
-
-
-
-    
-
   <div class="overlay" id="overlay" onclick="cerrarMenu()"></div>
 
-
-
-<!-- ══ MODAL EDITAR ALUMNO ══ -->
-<div class="modal-bg" id="modal-alumno">
-  <div class="modal">
-    <h3><i class="ti ti-edit" style="margin-right:6px;color:var(--azul)" aria-hidden="true"></i>Editar alumno</h3>
-    <input type="hidden" id="edit-id" />
-    <div class="form-grid">
-      <div><label class="fg-label">Nombre</label><input class="fg-input" type="text" id="edit-nombre" /></div>
-      <div><label class="fg-label">Sede</label>
-        <select class="fg-select" id="edit-sede">
-          <option value="Sede Central">Sede Carlos Paz</option>
-          <option value="Sede Norte">Malagueño</option>
-          <option value="Sede Sur">Tanti/Siquiman</option>
-          <option value="Sede Cosquín">Bialet masse</option>
-        </select>
+  <!-- Modal flotante de login -->
+  <div id="modal-login-flotante" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:999;align-items:center;justify-content:center;padding:20px">
+    <div style="background:white;border-radius:16px;padding:28px 24px;width:100%;max-width:360px;position:relative">
+      <button onclick="cerrarModalLogin()" style="position:absolute;top:12px;right:14px;background:none;border:none;font-size:20px;cursor:pointer;color:#888">✕</button>
+      <div style="text-align:center;margin-bottom:18px">
+        <div style="font-size:36px">🥋</div>
+        <div style="font-size:16px;font-weight:700;color:#111;margin-top:6px">Acceso al Sistema</div>
+        <div style="font-size:12px;color:#888;margin-top:3px">Solo para maestros registrados</div>
       </div>
-      <div><label class="fg-label">Cinturón</label>
-        <select class="fg-select" id="edit-cinturon">
-          <option value="blanco">Blanco</option>
-          <option value="amarillo">Amarillo</option>
-          <option value="verde">Verde</option>
-          <option value="azul">Azul</option>
-          <option value="rojo">Rojo</option>
-          <option value="negro">Negro</option>
-        </select>
+      <div style="margin-bottom:12px">
+        <label style="font-size:11px;color:#888;display:block;margin-bottom:4px;font-weight:700;text-transform:uppercase">Usuario</label>
+        <input id="login-user" type="text" placeholder="tu.usuario" style="width:100%;padding:10px 12px;border:1px solid #ddd;border-radius:9px;font-size:14px;font-family:inherit;outline:none" />
       </div>
-      <div><label class="fg-label">Fecha ingreso</label><input class="fg-input" type="date" id="edit-fecha" /></div>
-      <div><label class="fg-label">Salón</label>
-        <select class="fg-select" id="edit-salon">
-          <option value="Lun/Mié/Vie">Lunes · Miércoles · Viernes</option>
-          <option value="Mar/Jue/Sáb">Martes · Jueves · Sábado</option>
-          <option value="Sáb/Dom">Sábado · Domingo</option>
-        </select>
+      <div style="margin-bottom:6px">
+        <label style="font-size:11px;color:#888;display:block;margin-bottom:4px;font-weight:700;text-transform:uppercase">Contraseña</label>
+        <div style="position:relative">
+          <input id="login-pass" type="password" placeholder="••••••••" style="width:100%;padding:10px 42px 10px 12px;border:1px solid #ddd;border-radius:9px;font-size:14px;font-family:inherit;outline:none" />
+          <button class="btn-ojo" onclick="togglePass()"><i id="ojo-icon" class="ti ti-eye"></i></button>
+        </div>
       </div>
-    </div>
-    <div class="modal-btns">
-      <button class="btn-cancelar" onclick="cerrarModal('modal-alumno')">Cancelar</button>
-      <button class="btn-azul" onclick="guardarEdicion()"><i class="ti ti-check" aria-hidden="true"></i>Guardar</button>
+      <div id="login-err" style="font-size:12px;color:#dc2626;text-align:center;min-height:20px;margin-bottom:8px"></div>
+      <button onclick="validarLogin()" style="width:100%;padding:11px;background:#1a2a4a;color:white;border:none;border-radius:9px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">Ingresar</button>
     </div>
   </div>
-</div>
 
-<!-- ══ MODAL EDITAR MAESTRO ══ -->
-<div class="modal-bg" id="modal-maestro">
-  <div class="modal">
-    <h3 id="modal-maestro-titulo"><i class="ti ti-user" style="margin-right:6px;color:var(--azul)" aria-hidden="true"></i>Maestro</h3>
-    <input type="hidden" id="medit-usuario" />
-    <div class="form-grid">
-      <div><label class="fg-label">Nombre completo</label><input class="fg-input" type="text" id="medit-nombre" /></div>
-      <div><label class="fg-label">Sede</label>
-        <select class="fg-select" id="medit-sede">
-          <option value="Sede Central">Sede Carlos paz</option>
-          <option value="Sede Norte">Sede Malagueño</option>
-          <option value="Sede Sur">Tanti/Siquiman</option>
-          <option value="Sede Cosquín">Sede Cosquín</option>
-        </select>
-      </div>
-      <div><label class="fg-label">Usuario</label><input class="fg-input" type="text" id="medit-user" placeholder="ej: juan.garcia" /></div>
-      <div><label class="fg-label">Contraseña</label><input class="fg-input" type="text" id="medit-pass" placeholder="mínimo 4 caracteres" /></div>
-    </div>
-    <div class="modal-btns">
-      <button class="btn-cancelar" onclick="cerrarModal('modal-maestro')">Cancelar</button>
-      <button class="btn-azul" onclick="guardarMaestro()"><i class="ti ti-check" aria-hidden="true"></i>Guardar</button>
-    </div>
-  </div>
-</div>
-
-<!-- ══ LOGIN ══ -->
-<div class="screen visible" id="s-login">
-  <div class="login-page">
-    <div class="login-card">
-      <div class="login-logo">
-        <span class="emoji">🥋</span>
-        <h1>Taekwondo — Sistema</h1>
-        <p>Ingresá con tu usuario y contraseña</p>
-      </div>
-      <div class="err-msg" id="login-err"></div>
-      <div class="form-row">
-        <label>Usuario</label>
-        <input class="fi" type="text" id="login-user" placeholder="tu.usuario" autocomplete="username" />
-      </div>
-      <div class="form-row">
-        <label>Contraseña</label>
-        <div class="pass-wrap">
-          <input class="fi" type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password" />
-          <button class="btn-ojo" onclick="togglePass()" aria-label="Ver contraseña">
-            <i class="ti ti-eye" id="ojo-icon" aria-hidden="true"></i>
-          </button>
-        </div>
-      </div>
-      <button class="btn-login" onclick="intentarLogin()">
-        <i class="ti ti-login" aria-hidden="true"></i> Ingresar
-      </button>
-      <p class="hint">
-        <strong>Admin:</strong> tiago.delfini / admin1234<br>
-        <strong>Maestros:</strong> santiago.saez, marcela.lopez,<br>
-        julian.perez, ana.gonzalez — contraseña: tkd1234
-      </p>
-    </div>
-  </div>
-</div>
-
-<!-- ══ APP ══ -->
-<div class="screen" id="s-app">
-  <div class="app-wrap">
-
-    <div class="topbar">
-      <div class="topbar-left">
-        <span class="topbar-emoji">🥋</span>
-        <div>
-          <div class="topbar-nombre" id="tb-nombre">—<span class="admin-badge" id="tb-badge" style="display:none">ADMIN</span></div>
-          <div class="topbar-rol" id="tb-rol">—</div>
-        </div>
-      </div>
-      <button class="btn-salir" onclick="cerrarSesion()">
-        <i class="ti ti-logout" aria-hidden="true"></i> Salir
-      </button>
-    </div>
-
-    <div class="tabs" id="tabs-nav"></div>
-
-    <!-- TAB: DASHBOARD (solo admin) -->
-    <div class="tab-content" id="tab-dashboard">
-      <div class="stats-row" id="dash-stats"></div>
-      <div class="chart-grid">
-        <div class="chart-card"><h3><i class="ti ti-chart-bar" style="font-size:15px;margin-right:6px;color:var(--azul)" aria-hidden="true"></i>Alumnos por sede</h3><canvas id="chart-sedes" height="200"></canvas></div>
-        <div class="chart-card"><h3><i class="ti ti-chart-donut" style="font-size:15px;margin-right:6px;color:var(--azul)" aria-hidden="true"></i>Distribución de cinturones</h3><canvas id="chart-cinturones" height="200"></canvas></div>
-      </div>
-      <div class="chart-grid">
-        <div class="chart-card"><h3><i class="ti ti-trending-up" style="font-size:15px;margin-right:6px;color:var(--azul)" aria-hidden="true"></i>Asistencia últimas 7 fechas</h3><canvas id="chart-asist" height="180"></canvas></div>
-        <div class="chart-card"><h3><i class="ti ti-trophy" style="font-size:15px;margin-right:6px;color:var(--azul)" aria-hidden="true"></i>Alumnos por rango</h3><canvas id="chart-rangos" height="180"></canvas></div>
-      </div>
-    </div>
-
-    <!-- TAB: MAESTROS (solo admin) -->
-    <div class="tab-content" id="tab-maestros">
-      <div class="card">
-        <div class="card-title"><i class="ti ti-user-plus" aria-hidden="true"></i>Agregar maestro</div>
-        <div class="form-grid">
-          <div><label class="fg-label">Nombre completo</label><input class="fg-input" type="text" id="m-nombre" placeholder="Ej: Laura Gómez" /></div>
-          <div><label class="fg-label">Sede</label>
-            <select class="fg-select" id="m-sede">
-              <option value="Sede Central">Sede Central</option>
-              <option value="Sede Norte">Sede Norte</option>
-              <option value="Sede Sur">Sede Sur</option>
-              <option value="Sede Cosquín">Sede Cosquín</option>
-            </select>
-          </div>
-          <div><label class="fg-label">Usuario</label><input class="fg-input" type="text" id="m-user" placeholder="laura.gomez" /></div>
-          <div><label class="fg-label">Contraseña</label><input class="fg-input" type="text" id="m-pass" placeholder="mínimo 4 caracteres" /></div>
-        </div>
-        <button class="btn-azul" onclick="agregarMaestro()"><i class="ti ti-plus" aria-hidden="true"></i>Agregar maestro</button>
-      </div>
-      <div class="card">
-        <div class="card-title"><i class="ti ti-users" aria-hidden="true"></i>Lista de maestros</div>
-        <div class="tabla-wrap" id="tabla-maestros"></div>
-      </div>
-    </div>
-
-    <!-- TAB: ALUMNOS -->
-    <div class="tab-content" id="tab-alumnos">
-      <div class="stats-row" id="stats-alumnos"></div>
-      <div class="card" id="card-agregar-alumno">
-        <div class="card-title"><i class="ti ti-user-plus" aria-hidden="true"></i>Agregar alumno</div>
-        <div class="form-grid">
-          <div><label class="fg-label">Nombre completo</label><input class="fg-input" type="text" id="al-nombre" placeholder="Ej: Juan García" /></div>
-          <div><label class="fg-label">Sede</label>
-            <select class="fg-select" id="al-sede">
-              <option value="Sede Central">Sede Central</option>
-              <option value="Sede Norte">Sede Norte</option>
-              <option value="Sede Sur">Sede Sur</option>
-              <option value="Sede Cosquín">Sede Cosquín</option>
-            </select>
-          </div>
-          <div><label class="fg-label">Cinturón actual</label>
-            <select class="fg-select" id="al-cinturon">
-              <option value="blanco">Blanco</option>
-              <option value="amarillo">Amarillo</option>
-              <option value="naranja">Naranja</option>
-              <option value="verde">Verde</option>
-              <option value="azul">Azul</option>
-              <option value="rojo">Rojo</option>
-              <option value="negro">Negro</option>
-            </select>
-          </div>
-          <div><label class="fg-label">Fecha de ingreso</label><input class="fg-input" type="date" id="al-fecha" /></div>
-          <div><label class="fg-label">Salón</label>
-            <select class="fg-select" id="al-salon">
-              <option value="Lun/Mié/Vie">Lunes · Miércoles · Viernes</option>
-              <option value="Mar/Jue/Sáb">Martes · Jueves · Sábado</option>
-              <option value="Sáb/Dom">Sábado · Domingo</option>
-            </select>
-          </div>
-        </div>
-        <button class="btn-azul" onclick="agregarAlumno()"><i class="ti ti-plus" aria-hidden="true"></i>Agregar alumno</button>
-      </div>
-      <div class="card">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-          <div class="card-title" style="margin-bottom:0"><i class="ti ti-list" aria-hidden="true"></i>Lista de alumnos</div>
-          <span style="font-size:12px;color:var(--muted)" id="count-alumnos">0 alumnos</span>
-        </div>
-        <div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap" id="filtros-alumnos">
-          <select class="fg-select" id="filtro-sede" onchange="renderTablaAlumnos()" style="max-width:180px">
-            <option value="">Todas las sedes</option>
-            <option value="Sede Central">Sede Central</option>
-            <option value="Sede Norte">Sede Norte</option>
-            <option value="Sede Sur">Sede Sur</option>
-            <option value="Sede Cosquín">Sede Cosquín</option>
-          </select>
-          <select class="fg-select" id="filtro-salon" onchange="renderTablaAlumnos()" style="max-width:220px">
-            <option value="">Todos los salones</option>
-            <option value="Lun/Mié/Vie">Lunes · Miércoles · Viernes</option>
-            <option value="Mar/Jue/Sáb">Martes · Jueves · Sábado</option>
-            <option value="Sáb/Dom">Sábado · Domingo</option>
+  <!-- Modal editar alumno -->
+  <div class="modal-bg" id="modal-alumno">
+    <div class="modal">
+      <h3><i class="ti ti-edit" style="margin-right:6px;color:var(--azul)"></i>Editar alumno</h3>
+      <input type="hidden" id="edit-id" />
+      <div class="form-grid">
+        <div><label class="fg-label">Nombre</label><input class="fg-input" type="text" id="edit-nombre" /></div>
+        <div><label class="fg-label">Sede</label>
+          <select class="fg-select" id="edit-sede">
+            <option value="Sede C.P">Sede Carlos Paz</option>
+            <option value="Sede Malagueño">Malagueño</option>
+            <option value="Sede Tanti">Tanti</option>
+            <option value="Sede Siquiman">Siquiman</option>
+            <option value="Sede Bialet">Bialet Masse</option>
+            <option value="Sede La Falda">La Falda</option>
           </select>
         </div>
-        <div class="tabla-wrap" id="tabla-alumnos"></div>
-      </div>
-    </div>
-
-    <!-- TAB: ASISTENCIA -->
-    <div class="tab-content" id="tab-asistencia">
-      <div class="card">
-        <div class="card-title"><i class="ti ti-calendar" aria-hidden="true"></i>Tomar asistencia</div>
-        <div class="asist-controles">
-          <div><label class="fg-label">Fecha</label><input class="fg-input" type="date" id="asist-fecha" style="width:160px" /></div>
-          <div><label class="fg-label">Salón</label>
-            <select class="fg-select" id="asist-salon" onchange="renderAsistencia()" style="width:220px">
-              <option value="Lun/Mié/Vie">Lunes · Miércoles · Viernes</option>
-              <option value="Mar/Jue/Sáb">Martes · Jueves · Sábado</option>
-              <option value="Sáb/Dom">Sábado · Domingo</option>
-            </select>
-          </div>
+        <div><label class="fg-label">Cinturón</label>
+          <select class="fg-select" id="edit-cinturon">
+            <option value="blanco">Blanco</option>
+            <option value="puntaamarilla">Punta Amarilla</option>
+            <option value="amarillo">Amarillo</option>
+            <option value="puntaverde">Punta Verde</option>
+            <option value="verde">Verde</option>
+            <option value="puntaazul">Punta Azul</option>
+            <option value="azul">Azul</option>
+            <option value="puntaroja">Punta Roja</option>
+            <option value="rojo">Rojo</option>
+            <option value="puntanegra">Punta Negra</option>
+            <option value="negro">Negro</option>
+          </select>
         </div>
-        <div class="alerta" id="alerta-ok"><i class="ti ti-circle-check" aria-hidden="true"></i>Asistencia guardada</div>
-        <div id="lista-asistencia"></div>
-        <div style="margin-top:16px"><button class="btn-verde" onclick="guardarAsistencia()"><i class="ti ti-device-floppy" aria-hidden="true"></i>Guardar asistencia</button></div>
+        <div><label class="fg-label">Fecha ingreso</label><input class="fg-input" type="date" id="edit-fecha" /></div>
+        <div><label class="fg-label">Salón</label>
+          <select class="fg-select" id="edit-salon">
+
+             <option value="Las Ensenadas">Las Ensenadas</option>
+             <option value="San Pedro">Altos de San Pedro</option>
+             <option value="C.J.E.D">Centro de jubilados E.D</option>
+              <option value="S.V Las Malvinas">Las Malvinas</option>
+              <option value="Sol y Lago">Sol y Lago</option>
+              <option value="Los Algarrobos">Los Algarrobos</option>
+              <option value="Malagueño">Martin Ferreyra</option>
+              <option value="Tanti">Parador Stadium</option>
+              <option value="Tanti">Deportivo San Jose</option>
+              <option value="Bialet Masse">Club Deportivo Bialet Masse</option>
+              <option value="La Falda">Club La Falda</option>
+              <option value="La Falda">Centro de Jubilados</option>
+
+          </select>
+        </div>
       </div>
-      <div class="card">
-        <div class="card-title"><i class="ti ti-history" aria-hidden="true"></i>Historial reciente</div>
-        <div id="historial-asist"></div>
+      <div class="modal-btns">
+        <button class="btn-cancelar" onclick="cerrarModal('modal-alumno')">Cancelar</button>
+        <button class="btn-azul" onclick="guardarEdicion()"><i class="ti ti-device-floppy"></i> Guardar</button>
       </div>
     </div>
-
-    <!-- TAB: LOGROS -->
-    <div class="tab-content" id="tab-logros">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap">
-        <label style="font-size:13px;color:var(--muted)">Filtrar por salón:</label>
-        <select class="fg-select" id="logros-salon" onchange="renderLogros()" style="width:220px">
-          <option value="">Todos los salones</option>
-          <option value="Lun/Mié/Vie">Lunes · Miércoles · Viernes</option>
-          <option value="Mar/Jue/Sáb">Martes · Jueves · Sábado</option>
-          <option value="Sáb/Dom">Sábado · Domingo</option>
-        </select>
-      </div>
-      <div id="lista-logros"></div>
-    </div>
-
   </div>
-</div>
 
-
-
+  <!-- Modal editar maestro -->
+  <div class="modal-bg" id="modal-maestro">
+    <div class="modal">
+      <h3 id="modal-maestro-titulo"><i class="ti ti-edit" style="margin-right:6px;color:var(--azul)"></i>Editar maestro</h3>
+      <input type="hidden" id="medit-usuario" />
+      <div class="form-grid">
+        <div><label class="fg-label">Nombre completo</label><input class="fg-input" type="text" id="medit-nombre" /></div>
+        <div><label class="fg-label">Sede</label>
+          <select class="fg-select" id="medit-sede">
+            <option value="Sede C.P">Sede Carlos paz</option>
+            <option value="Sede Malagueño">Sede Malagueño</option>
+            <option value="Sede Tanti">Sede Tanti</option>
+            <option value="Sede Siquiman">Sede Siquiman</option>
+            <option value="Sede Bialet Masse">Sede Bialet Masse</option>
+            <option value="Sede La Falda">Sede La Falda</option>
+          </select>
+        </div>
+        <div><label class="fg-label">Usuario</label><input class="fg-input" type="text" id="medit-user" /></div>
+        <div><label class="fg-label">Contraseña</label><input class="fg-input" type="text" id="medit-pass" /></div>
+      </div>
+      <div class="modal-btns">
+        <button class="btn-cancelar" onclick="cerrarModal('modal-maestro')">Cancelar</button>
+        <button class="btn-azul" onclick="guardarMaestro()"><i class="ti ti-device-floppy"></i> Guardar</button>
+      </div>
+    </div>
+  </div>
 
   <div class="sidebar" id="sidebar">
     <div class="sidebar-head">
@@ -971,8 +766,6 @@
         <i class="ti ti-shopping-cart"></i> Tienda
         <i class="ti ti-chevron-right chevron"></i>
       </button>
-<button class="menu-item" id="m-gestion" style="display:none;" onclick="ir('s-gestion','Panel de Gestión',this)"><i class="ti ti-layout-dashboard"></i>Gestión de Escuela</button>
-
       <button class="menu-item" onclick="ir('nosotros','Sobre Nosotros',this)">
         <i class="ti ti-users"></i> Nosotros
         <i class="ti ti-chevron-right chevron"></i>
@@ -996,6 +789,15 @@
       </div>
     </div>
     <span class="topbar-seccion" id="topbarSeccion">Nuestras Sedes</span>
+    <button id="btn-acceso-menu" onclick="irALogin()" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-family: inherit; font-size: 13px;">
+        <i class="ti ti-lock"></i> Acceder
+      </button>
+    <button id="btn-gestion-top" onclick="volverAGestion()" style="display:none;background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-family: inherit; font-size: 13px;">
+        <i class="ti ti-layout-dashboard"></i> Gestión
+      </button>
+    <button id="btn-salir-top" onclick="cerrarSesion()" style="display:none;background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-family: inherit; font-size: 13px;">
+        <i class="ti ti-logout"></i> Salir
+      </button>
   </div>
 
   <div class="contenido">
@@ -1014,6 +816,9 @@
           <span class="badge">Las Ensenadas</span>
           <span class="badge">Las Malvinas</span>
           <span class="badge">Los Algarrobos</span>
+          <span class="badge">Centro Jubilados E.D</span>
+          <span class="badge">C.V Altos de San Pedro</span>
+
         </div>
         <div class="card">
           <div class="sede-icon">🏢</div>
@@ -1023,10 +828,23 @@
         </div>
         <div class="card">
           <div class="sede-icon">🏫</div>
-          <div class="sede-nombre">Tanti/Siquiman</div>
+          <div class="sede-nombre">Tanti</div>
           <div class="sede-dir">Urquiza 890<br>Villa del Lago</div>
-          <span class="badge">Deportivo San Jose</span>
+          <span class="badge">Instituto San Jose</span>
           <span class="badge">Stadium Parador</span>
+        </div>
+        <div class="card">
+          <div class="sede-icon">🏫</div>
+          <div class="sede-nombre">Siquiman</div>
+          <div class="sede-dir">Urquiza 890<br>Villa del Lago</div>
+          <span class="badge">Sum</span>
+        </div>
+        <div class="card">
+          <div class="sede-icon">🏫</div>
+          <div class="sede-nombre">La Falda</div>
+          <div class="sede-dir">Urquiza 890<br>Villa del Lago</div>
+          <span class="badge">Club la falda</span>
+          <span class="badge">Centro de Jubilados</span>
         </div>
         <div class="card">
           <div class="sede-icon">⛳</div>
@@ -1061,7 +879,23 @@
           </div>
         </div>
         <div class="card-azul">
-          <div class="cabecera">🏫 Tanti/Siquiman <small>Mar · Jue · Sáb</small></div>
+          <div class="cabecera">🏫 Tanti <small>Mar · Jue · Sáb</small></div>
+          <div class="cuerpo">
+            <div class="fila"><span class="muted">Infantil (5–10)</span><span class="strong">17:00 – 18:00</span></div>
+            <div class="fila"><span class="muted">Principiantes</span><span class="strong">18:00 – 19:30</span></div>
+            <div class="fila"><span class="muted">Avanzados</span><span class="strong">19:30 – 21:00</span></div>
+          </div>
+        </div>
+        <div class="card-azul">
+          <div class="cabecera">🏫 Siquiman <small>Mar · Jue · Sáb</small></div>
+          <div class="cuerpo">
+            <div class="fila"><span class="muted">Infantil (5–10)</span><span class="strong">17:00 – 18:00</span></div>
+            <div class="fila"><span class="muted">Principiantes</span><span class="strong">18:00 – 19:30</span></div>
+            <div class="fila"><span class="muted">Avanzados</span><span class="strong">19:30 – 21:00</span></div>
+          </div>
+        </div>
+        <div class="card-azul">
+          <div class="cabecera">🏫 La Falda <small>Mar · Jue · Sáb</small></div>
           <div class="cuerpo">
             <div class="fila"><span class="muted">Infantil (5–10)</span><span class="strong">17:00 – 18:00</span></div>
             <div class="fila"><span class="muted">Principiantes</span><span class="strong">18:00 – 19:30</span></div>
@@ -1087,12 +921,16 @@
         <div class="card-azul">
           <div class="cabecera">🥋 Próximos exámenes <small>Sede Central — 2026</small></div>
           <div class="cuerpo">
-            <div class="fila"><span class="muted"><span class="dot-g" style="background:#FFD700"></span>Blanco → Amarillo</span><span class="strong">14 Jun</span></div>
-            <div class="fila"><span class="muted"><span class="dot-g" style="background:#ff8c00"></span>Amarillo → Naranja</span><span class="strong">14 Jun</span></div>
-            <div class="fila"><span class="muted"><span class="dot-g" style="background:#228B22"></span>Naranja → Verde</span><span class="strong">12 Jul</span></div>
-            <div class="fila"><span class="muted"><span class="dot-g" style="background:#00008B"></span>Verde → Azul</span><span class="strong">12 Jul</span></div>
-            <div class="fila"><span class="muted"><span class="dot-g" style="background:#8B0000"></span>Azul → Rojo</span><span class="strong">20 Sep</span></div>
-            <div class="fila"><span class="muted"><span class="dot-g" style="background:#111"></span>Rojo → Negro</span><span class="strong">15 Nov</span></div>
+            <div class="fila"><span class="muted"><span class="dot-g" style="background:#FFD700"></span>Blanco → PuntaAmarilla</span><span class="strong">14 Jun</span></div>
+            <div class="fila"><span class="muted"><span class="dot-g" style="background:#ff8c00"></span>PuntaAmarilla → Amarillo</span><span class="strong">14 Jun</span></div>
+            <div class="fila"><span class="muted"><span class="dot-g" style="background:#5f8005"></span>Amarillo → PuntaVerde</span><span class="strong">14 Jun</span></div>
+            <div class="fila"><span class="muted"><span class="dot-g" style="background:#228B22"></span>PuntaVerde → Verde</span><span class="strong">12 Jul</span></div>
+            <div class="fila"><span class="muted"><span class="dot-g" style="background:#028d6a"></span>Verde → PuntaAzul</span><span class="strong">12 Jul</span></div>
+            <div class="fila"><span class="muted"><span class="dot-g" style="background:#0211df"></span>PuntaAzul → Azul</span><span class="strong">20 Sep</span></div>
+            <div class="fila"><span class="muted"><span class="dot-g" style="background:#4c00ff"></span>Azul → PuntaRoja</span><span class="strong">15 Nov</span></div>
+            <div class="fila"><span class="muted"><span class="dot-g" style="background:#ff0000"></span>PuntaRoja → Rojo</span><span class="strong">14 Jun</span></div>
+            <div class="fila"><span class="muted"><span class="dot-g" style="background:#ff0000"></span>Rojo → PuntaNegra</span><span class="strong">14 Jun</span></div>
+            <div class="fila"><span class="muted"><span class="dot-g" style="background:#000000"></span>PuntaNegra → Negro</span><span class="strong">14 Jun</span></div>
           </div>
         </div>
         <div class="card-azul">
@@ -1137,7 +975,7 @@
         <div class="maestro-card">
           <div class="maestro-top">
             <div class="avatar">VS</div>
-            <div><div class="m-nombre">Valentin Saez</div><div class="m-sub">Carlos paz / Tanti/Siquiman · Negro 4° Dan</div></div>
+            <div><div class="m-nombre">Valentin Saez</div><div class="m-sub">Carlos paz / Tanti / La Falda · Negro 4° Dan</div></div>
           </div>
           <hr class="m-divider" />
           <div class="m-detalle"><i class="ti ti-phone"></i> +54 9 3541 20-0002</div>
@@ -1148,7 +986,7 @@
         <div class="maestro-card">
           <div class="maestro-top">
             <div class="avatar">SS</div>
-            <div><div class="m-nombre">Santiago Saez</div><div class="m-sub">Carlos paz/ Tanti/Siquiman · Negro 3° Dan</div></div>
+            <div><div class="m-nombre">Santiago Saez</div><div class="m-sub">Carlos paz/ Tanti / Siquiman · Negro 3° Dan</div></div>
           </div>
           <hr class="m-divider" />
           <div class="m-detalle"><i class="ti ti-phone"></i> +54 9 3541 30-0003</div>
@@ -1159,7 +997,7 @@
         <div class="maestro-card">
           <div class="maestro-top">
             <div class="avatar">ND</div>
-            <div><div class="m-nombre">Natalia Daris </div><div class="m-sub">Bialet Masse · Negro 2° Dan</div></div>
+            <div><div class="m-nombre">Natalia Daris </div><div class="m-sub">Bialet Masse / Carlos Paz · Negro 2° Dan</div></div>
           </div>
           <hr class="m-divider" />
           <div class="m-detalle"><i class="ti ti-phone"></i> +54 9 3541 40-0004</div>
@@ -1180,7 +1018,7 @@
           <h3>🏛️ Las Ensenadas</h3>
           <div class="mapa-dir">Av. San Martín 450, Villa Carlos Paz, Córdoba</div>
           <div class="mapa-dir">Referencia: frente a la plaza principal</div>
-          <a class="map-link" href="https://maps.google.com" target="_blank">
+          <a class="map-link" href="https://maps.app.goo.gl/KTPGXN8hEL8gKR9k8?g_st=iwb" target="_blank">
             <i class="ti ti-external-link"></i> Ver en Google Maps
           </a>
         </div>
@@ -1188,7 +1026,7 @@
           <h3>🏛️ C.V Sol y Lago</h3>
           <div class="mapa-dir">Av. San Martín 450, Villa Carlos Paz, Córdoba</div>
           <div class="mapa-dir">Referencia: frente a la plaza principal</div>
-          <a class="map-link" href="https://maps.google.com" target="_blank">
+          <a class="map-link" href="https://maps.app.goo.gl/vDbT9Yu9a8kyMtbN6?g_st=iwb" target="_blank">
             <i class="ti ti-external-link"></i> Ver en Google Maps
           </a>
         </div>
@@ -1196,7 +1034,7 @@
           <h3>🏛️ Los Algarrobos</h3>
           <div class="mapa-dir">Av. San Martín 450, Villa Carlos Paz, Córdoba</div>
           <div class="mapa-dir">Referencia: frente a la plaza principal</div>
-          <a class="map-link" href="https://maps.google.com" target="_blank">
+          <a class="map-link" href="https://maps.app.goo.gl/KCZbyAyb1cZDdssT9?g_st=iwb" target="_blank">
             <i class="ti ti-external-link"></i> Ver en Google Maps
           </a>
         </div>
@@ -1204,10 +1042,28 @@
           <h3>🏛️ Las Malvinas</h3>
           <div class="mapa-dir">Av. San Martín 450, Villa Carlos Paz, Córdoba</div>
           <div class="mapa-dir">Referencia: frente a la plaza principal</div>
-          <a class="map-link" href="https://maps.google.com" target="_blank">
+          <a class="map-link" href="https://maps.app.goo.gl/DFcujk31umxvDynV6?g_st=iwb" target="_blank">
             <i class="ti ti-external-link"></i> Ver en Google Maps
           </a>
         </div>
+        <div class="mapa-card">
+          <h3>🏛️ Altos de San Pedro</h3>
+          <div class="mapa-dir">Av. San Martín 450, Villa Carlos Paz, Córdoba</div>
+          <div class="mapa-dir">Referencia: frente a la plaza principal</div>
+          <a class="map-link" href="https://maps.app.goo.gl/j8hx9LtAWyNXaqxM8?g_st=iwb" target="_blank">
+            <i class="ti ti-external-link"></i> Ver en Google Maps
+          </a>
+        </div>
+
+         <div class="mapa-card">
+          <h3>🏛️ C.J Edad Dorada</h3>
+          <div class="mapa-dir">Av. San Martín 450, Villa Carlos Paz, Córdoba</div>
+          <div class="mapa-dir">Referencia: frente a la plaza principal</div>
+          <a class="map-link" href="https://maps.app.goo.gl/fBRDmLzZW7W1ELrS6?g_st=iwb" target="_blank">
+            <i class="ti ti-external-link"></i> Ver en Google Maps
+          </a>
+        </div>
+        
         <div class="mapa-card">
           <h3>🏢 Martin Ferreyra</h3>
           <div class="mapa-dir">Los Álamos 120, Barrio Norte, V. Carlos Paz</div>
@@ -1220,15 +1076,24 @@
           <h3>🏫 Stadium Parador</h3>
           <div class="mapa-dir">Urquiza 890, Villa del Lago, V. Carlos Paz</div>
           <div class="mapa-dir">Referencia: al lado del polideportivo municipal</div>
-          <a class="map-link" href="https://maps.google.com" target="_blank">
+          <a class="map-link" href="https://maps.app.goo.gl/pwnXgYeeqAb8Jfag7?g_st=iwb" target="_blank">
             <i class="ti ti-external-link"></i> Ver en Google Maps
           </a>
         </div>
         <div class="mapa-card">
-          <h3>⛳ Deportivo San Jose</h3>
+          <h3>⛳ Instituto San Jose</h3>
           <div class="mapa-dir">Belgrano 33, Cosquín, Córdoba</div>
           <div class="mapa-dir">Referencia: a media cuadra del río</div>
-          <a class="map-link" href="https://maps.google.com" target="_blank">
+          <a class="map-link" href="https://maps.app.goo.gl/sMpJBP2pxP1wxVAt5?g_st=iwb" target="_blank">
+            <i class="ti ti-external-link"></i> Ver en Google Maps
+          </a>
+        </div>
+
+        <div class="mapa-card">
+          <h3>⛳ Sum</h3>
+          <div class="mapa-dir">Belgrano 33, Cosquín, Córdoba</div>
+          <div class="mapa-dir">Referencia: a media cuadra del río</div>
+          <a class="map-link" href="https://maps.app.goo.gl/PhYHDdaWBrdJW5iB7?g_st=iwb" target="_blank">
             <i class="ti ti-external-link"></i> Ver en Google Maps
           </a>
         </div>
@@ -1236,10 +1101,29 @@
           <h3>🏛️ Bialet Masse</h3>
           <div class="mapa-dir">Av. San Martín 450, Villa Carlos Paz, Córdoba</div>
           <div class="mapa-dir">Referencia: frente a la plaza principal</div>
-          <a class="map-link" href="https://maps.google.com" target="_blank">
+          <a class="map-link" href="https://maps.app.goo.gl/nvnAUkvhv48iCqLK7?g_st=iwb" target="_blank">
             <i class="ti ti-external-link"></i> Ver en Google Maps
           </a>
         </div>
+
+        <div class="mapa-card">
+          <h3>🏛️ Centro de Jubilados La Falda</h3>
+          <div class="mapa-dir">Av. San Martín 450, Villa Carlos Paz, Córdoba</div>
+          <div class="mapa-dir">Referencia: frente a la plaza principal</div>
+          <a class="map-link" href="https://maps.app.goo.gl/Fx7yrM7MQw62Z9zW9?g_st=iwb" target="_blank">
+            <i class="ti ti-external-link"></i> Ver en Google Maps
+          </a>
+        </div>
+
+         <div class="mapa-card">
+          <h3>🏛️ Club Atletico La Falda</h3>
+          <div class="mapa-dir">Av. San Martín 450, Villa Carlos Paz, Córdoba</div>
+          <div class="mapa-dir">Referencia: frente a la plaza principal</div>
+          <a class="map-link" href="https://maps.app.goo.gl/pxWPQqBrRf5XZW5b6?g_st=iwb" target="_blank">
+            <i class="ti ti-external-link"></i> Ver en Google Maps
+          </a>
+        </div>
+
       </div>
     </div>
 
@@ -1249,23 +1133,19 @@
         <span class="h-emoji">🛒</span>
       </div>
       <div class="tienda-grid">
-      
-
- <div class="producto-card">
+        <div class="producto-card">
           <div class="producto-badge">Oficial</div>
-          <div class="producto-info"></div>
-          <img src="Dobok.png" alt="" class="tienda-img">
+          <div class=""></div> 
+          <img src="Dobok.png" alt="Dobok Oficial" class="tienda-img">
           <div class="producto-info">
             <h3>Dobok Oficial (Uniforme)</h3>
             <p class="producto-desc">Uniforme obligatorio para clases y exámenes. Tela de alta resistencia.</p>
             <div class="producto-pie">
-              <span class="producto-precio">$38.000</span>
-              <span class="producto-talle">S - M - L</span>
+              <span class="producto-precio">$45.000</span>
+              <span class="producto-talle">Talles: 1 al 5</span>
             </div>
           </div>
         </div>
-
-        
         <div class="producto-card">
           <div class="producto-badge">Equipo</div>
           <div class="producto-info"></div>
@@ -1341,11 +1221,15 @@
         <h3 style="font-size:15px; font-weight:700; color:#333; margin-top:22px; margin-bottom:6px">Grados disponibles</h3>
         <div class="cinturones">
           <span class="cinta"><span class="dot" style="background:#fff; border:1px solid #ccc"></span>Blanco</span>
+          <span class="cinta"><span class="dot" style="background:#FFD700"></span>Punta Amarilla</span>
           <span class="cinta"><span class="dot" style="background:#FFD700"></span>Amarillo</span>
-          <span class="cinta"><span class="dot" style="background:#ff8c00"></span>Naranja</span>
+          <span class="cinta"><span class="dot" style="background:#ff8c00"></span>Punta Verde</span>
           <span class="cinta"><span class="dot" style="background:#228B22"></span>Verde</span>
+          <span class="cinta"><span class="dot" style="background:#228B22"></span>Punta Azul</span>
           <span class="cinta"><span class="dot" style="background:#00008B"></span>Azul</span>
+          <span class="cinta"><span class="dot" style="background:#00008B"></span>Punta Roja</span>
           <span class="cinta"><span class="dot" style="background:#8B0000"></span>Rojo</span>
+          <span class="cinta"><span class="dot" style="background:#8B0000"></span>Punta Negra</span>
           <span class="cinta"><span class="dot" style="background:#111"></span>Negro</span>
         </div>
 
@@ -1401,43 +1285,250 @@
             </div>
           </div>
 
-          
-
         </div>
       </div>
     </div>
 
-  </div> <script>
-    function toggleMenu() {
-      document.getElementById('sidebar').classList.toggle('visible');
-      document.getElementById('overlay').classList.toggle('visible');
-      document.getElementById('btnHam').classList.toggle('abierto');
-    }
 
-    function cerrarMenu() {
-      document.getElementById('sidebar').classList.remove('visible');
-      document.getElementById('overlay').classList.remove('visible');
-      document.getElementById('btnHam').classList.remove('abierto');
-    }
-
-    function ir(idSeccion, nombreSeccion, boton) {
-      document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
-      document.querySelectorAll('.menu-item').forEach(b => b.classList.remove('activo'));
-      
-      document.getElementById(idSeccion).classList.add('visible');
-      if(boton) boton.classList.add('activo');
-      
-      document.getElementById('topbarSeccion').innerText = nombreSeccion;
-      cerrarMenu();
-    }
-
-    function toggleFaq(btn) {
-      const item = btn.parentElement;
-      item.classList.toggle('abierto');
-    }
+    
+<!-- ══ LOGIN ══ -->
+    <div class="section" id="login">
+      <div class="hero-banner">
+        <div><h2>Acceso al Sistema</h2><p>Inicio de sesion para maestros</p></div>
+        <span class="h-emoji">🔐</span>
+      </div>
+      <div class="card" style="max-width:400px; margin: 20px auto; padding: 24px; text-align:center">
+        <p style="font-size:14px;color:#666;margin-bottom:18px">Usá el botón "Acceder" en la barra superior para iniciar sesión.</p>
+        <button onclick="irALogin()" style="padding:12px 24px;background:#1a2a4a;color:white;border:none;border-radius:9px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">
+          <i class="ti ti-lock"></i> Abrir login
+        </button>
+      </div>
+      </div>
+  </div> 
 
 
+  <!-- ══ APP ══ -->
+   <div class="screen" id="s-app">
+    <div class="app-wrap">
+       <div class="card" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;padding:14px 20px">
+         <div style="display:flex;align-items:center;gap:12px">
+           <span style="font-size:28px">🥋</span>
+           <div>
+            <div class="topbar-nombre" id="tb-nombre" style="font-size:15px;font-weight:700;color:#111">—<span class="admin-badge" id="tb-badge" style="display:none">ADMIN</span></div>
+            <div class="topbar-rol" id="tb-rol" style="font-size:12px;color:var(--muted)">—</div>
+           </div>
+         </div>
+         <button class="btn-salir" onclick="cerrarSesion()" style="background:#f5f5f5;border:1px solid #ddd;color:#444;padding:7px 14px;border-radius:8px;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:6px;font-family:'Segoe UI',sans-serif">
+           <i class="ti ti-logout" aria-hidden="true"></i> Salir
+         </button>
+       </div>
 
+    <div class="tabs" id="tabs-nav"></div>
+
+    <!-- TAB: DASHBOARD (solo admin) -->
+     <div class="tab-content" id="tab-dashboard">
+      <div class="stats-row" id="dash-stats"></div>
+      <div class="chart-grid">
+        <div class="chart-card"><h3><i class="ti ti-chart-bar" style="font-size:15px;margin-right:6px;color:var(--azul)" aria-hidden="true"></i>Alumnos por sede</h3><canvas id="chart-sedes" height="200"></canvas></div>
+        <div class="chart-card"><h3><i class="ti ti-chart-donut" style="font-size:15px;margin-right:6px;color:var(--azul)" aria-hidden="true"></i>Distribución de cinturones</h3><canvas id="chart-cinturones" height="200"></canvas></div>
+      </div>
+      <div class="chart-grid">
+        <div class="chart-card"><h3><i class="ti ti-trending-up" style="font-size:15px;margin-right:6px;color:var(--azul)" aria-hidden="true"></i>Asistencia últimas 7 fechas</h3><canvas id="chart-asist" height="180"></canvas></div>
+        <div class="chart-card"><h3><i class="ti ti-trophy" style="font-size:15px;margin-right:6px;color:var(--azul)" aria-hidden="true"></i>Alumnos por rango</h3><canvas id="chart-rangos" height="180"></canvas></div>
+      </div>
+      </div>
+
+
+
+      <!-- TAB: MAESTROS (solo admin) -->
+       <div class="tab-content" id="tab-maestros">
+        <div class="card">
+          <div class="card-title"><i class="ti ti-user-plus" aria-hidden="true"></i>Agregar maestro</div>
+          <div class="form-grid">
+            <div><label class="fg-label">Nombre completo</label><input class="fg-input" type="text" id="m-nombre" placeholder="Ej: Laura Gómez" /></div>
+              <div><label class="fg-label">Sede</label>
+                <select class="fg-select" id="m-sede">
+                  <option value="Sede Carlos Paz ">Carlos Paz</option>
+                  <option value="Sede Malagueño">Malagueño</option>
+                  <option value="Sede Tanti">Tanti</option>
+                  <option value="Sede Siquiman">Siquiman</option>
+                  <option value="Sede Bialet Masse">Bialet Masse</option>
+                  <option value="Sede La Falda">La Falda</option>
+
+                    </select>
+                  </div>
+                  <div><label class="fg-label">Usuario</label><input class="fg-input" type="text" id="m-user" placeholder="laura.gomez" /></div>
+                  <div><label class="fg-label">Contraseña</label><input class="fg-input" type="text" id="m-pass" placeholder="mínimo 4 caracteres" /></div></div>
+                  <button class="btn-azul" onclick="agregarMaestro()"><i class="ti ti-plus" aria-hidden="true"></i>Agregar maestro</button>
+        </div>
+        <div class="card">
+          <div class="card-title"><i class="ti ti-users" aria-hidden="true"></i>Lista de maestros</div>
+          <div class="tabla-wrap" id="tabla-maestros"></div>
+        </div>
+        </div>
+
+
+
+        <!-- TAB: ALUMNOS -->
+    <div class="tab-content" id="tab-alumnos">
+      <div class="stats-row" id="stats-alumnos"></div>
+      <div class="card" id="card-agregar-alumno">
+        <div class="card-title"><i class="ti ti-user-plus" aria-hidden="true"></i>Agregar alumno</div>
+        <div class="form-grid">
+          <div><label class="fg-label">Nombre completo</label><input class="fg-input" type="text" id="al-nombre" placeholder="Ej: Juan García" /></div>
+          <div><label class="fg-label">Sede</label>
+            <select class="fg-select" id="al-sede">
+             <option value="Sede Carlos Paz ">Carlos Paz</option>
+                  <option value="Sede Malagueño">Malagueño</option>
+                  <option value="Sede Tanti">Tanti</option>
+                  <option value="Sede Siquiman">Siquiman</option>
+                  <option value="Sede Bialet Masse">Bialet Masse</option>
+                  <option value="Sede La Falda">La Falda</option>
+            </select>
+          </div>
+          <div><label class="fg-label">Cinturón actual</label>
+            <select class="fg-select" id="al-cinturon">
+              <option value="blanco">Blanco</option>
+              <option value="punta amarilla">Punta amarilla</option>
+              <option value="amarillo">Amarillo</option>
+              <option value="punta verde">Punta verde</option>
+              <option value="verde">Verde</option>
+              <option value="punta azul">Punta azul</option>
+              <option value="azul">Azul</option>
+              <option value="punta roja">Punta roja</option>
+              <option value="rojo">Rojo</option>
+              <option value="punta negra">Punta negra</option>
+              <option value="negro">Negro</option>
+            </select>
+          </div>
+          <div><label class="fg-label">Fecha de ingreso</label><input class="fg-input" type="date" id="al-fecha" /></div>
+          <div><label class="fg-label">Salón</label>
+            <select class="fg-select" id="al-salon">
+              <option value="Las Ensenadas">Las Ensenadas</option>
+              <option value="S.V Las Malvinas">Las Malvinas</option>
+              <option value="Sol y Lago">Sol y Lago</option>
+              <option value="Los Algarrobos">Los Algarrobos</option>
+              <option value="C.P San Pedro">C.V Altos de San Pedro</option>
+              <option value="C.J.E.D">C.J Edad Dorada</option>
+              <option value="Malagueño">Martin Ferreyra</option>
+              <option value="Tanti">Parador Stadium</option>
+              <option value="Tanti">Instituto San Jose</option>
+              <option value="Siquiman">Soum</option>
+              <option value="La Falda">Atletico La Falda</option>
+              <option value="La Falda">Centro de Jubilados </option>
+              <option value="Bialet Masse">Bialet Masse</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn-azul" onclick="agregarAlumno()"><i class="ti ti-plus" aria-hidden="true"></i>Agregar alumno</button>
+      </div>
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+          <div class="card-title" style="margin-bottom:0"><i class="ti ti-list" aria-hidden="true"></i>Lista de alumnos</div>
+          <span style="font-size:12px;color:var(--muted)" id="count-alumnos">0 alumnos</span>
+        </div>
+        <div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap" id="filtros-alumnos">
+          <select class="fg-select" id="filtro-sede" onchange="renderTablaAlumnos()" style="max-width:180px">
+            <option value="">Todas las sedes</option>
+            <option value="Sede C.P">Carlos Paz</option>
+            <option value="Sede Malagueño">Malagueño</option>
+            <option value="Sede Tanti">Tanti</option>
+            <option value="Sede Siquiman">Siquiman</option>
+            <option value="Sede Punilla">Bialet Masse</option>
+            <option value="Sede La Falda">La Falda</option>
+          </select>
+          <select class="fg-select" id="filtro-salon" onchange="renderTablaAlumnos()" style="max-width:220px">
+            <option value="">Todos los salones</option>
+            <option value="Las Ensenadas">Las Ensenadas</option>
+            <option value="S.V Las Malvinas">Las Malvinas</option>
+            <option value="Sol y Lago">Sol y Lago</option>
+            <option value="Los Algarrobos">Los Algarrobos</option>
+            <option value="C.P San Pedro">C.V Altos de San Pedro</option>
+            <option value="C.J.E.D">C.J Edad Dorada</option>
+            <option value="Malagueño">Martin Ferreyra</option>
+            <option value="Tanti">Parador Stadium</option>
+            <option value="Tanti">Instituto San Jose</option>
+            <option value="Siquiman">Soum</option>
+            <option value="La Falda">Atletico La Falda</option>
+            <option value="La Falda">Centro de Jubilados </option>
+            <option value="Bialet Masse">Bialet Masse</option>
+          </select>
+        </div>
+        <div class="tabla-wrap" id="tabla-alumnos"></div>
+      </div>
+    </div>
+
+
+
+
+     <!-- TAB: ASISTENCIA -->
+    <div class="tab-content" id="tab-asistencia">
+      <div class="card">
+        <div class="card-title"><i class="ti ti-calendar" aria-hidden="true"></i>Tomar asistencia</div>
+        <div class="asist-controles">
+          <div><label class="fg-label">Fecha</label><input class="fg-input" type="date" id="asist-fecha" style="width:160px" /></div>
+          <div><label class="fg-label">Salón</label>
+            <select class="fg-select" id="asist-salon" onchange="renderAsistencia()" style="width:220px">
+              <option value="">Seleccionar salón</option>
+              <option value="Las Ensenadas">Las Ensenadas</option>
+              <option value="S.V Las Malvinas">Las Malvinas</option>
+              <option value="Sol y Lago">Sol y Lago</option>
+              <option value="Los Algarrobos">Los Algarrobos</option>
+              <option value="C.P San Pedro">C.V Altos de San Pedro</option>
+            <option value="C.J.E.D">C.J Edad Dorada</option>
+              <option value="Malagueño">Martin Ferreyra</option>
+              <option value="Tanti">Parador Stadium</option>
+              <option value="Tanti">Instituto San Jose</option>
+              <option value="Siquiman">Soum</option>
+              <option value="La Falda">Atletico La Falda</option>
+            <option value="La Falda">Centro de Jubilados </option>
+              <option value="Bialet Masse">Bialet Masse</option>
+              
+
+            </select>
+          </div>
+        </div>
+        <div class="alerta" id="alerta-ok"><i class="ti ti-circle-check" aria-hidden="true"></i>Asistencia guardada</div>
+        <div id="lista-asistencia"></div>
+        <div style="margin-top:16px"><button class="btn-verde" onclick="guardarAsistencia()"><i class="ti ti-device-floppy" aria-hidden="true"></i>Guardar asistencia</button></div>
+      </div>
+      <div class="card">
+        <div class="card-title"><i class="ti ti-history" aria-hidden="true"></i>Historial reciente</div>
+        <div id="historial-asist"></div>
+      </div>
+    </div>
+
+    <!-- TAB: LOGROS -->
+    <div class="tab-content" id="tab-logros">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap">
+        <label style="font-size:13px;color:var(--muted)">Filtrar por salón:</label>
+        <select class="fg-select" id="logros-salon" onchange="renderLogros()" style="width:220px">
+          <option value="">Todos los salones</option>
+          <option value="Las Ensenadas">Las Ensenadas</option>
+              <option value="S.V Las Malvinas">Las Malvinas</option>
+              <option value="Sol y Lago">Sol y Lago</option>
+              <option value="Los Algarrobos">Los Algarrobos</option>
+              <option value="C.P San Pedro">C.V Altos de San Pedro</option>
+            <option value="C.J.E.D">C.J Edad Dorada</option>
+              <option value="Malagueño">Martin Ferreyra</option>
+              <option value="Tanti">Parador Stadium</option>
+              <option value="Tanti">Instituto San Jose</option>
+              <option value="Siquiman">Soum</option>
+              <option value="La Falda">Atletico La Falda</option>
+            <option value="La Falda">Centro de Jubilados </option>
+              <option value="Bialet Masse">Bialet Masse</option>
+        
+        </select>
+      </div>
+      <div id="lista-logros"></div>
+    </div>
+
+    </div>
+  </div><!-- fin s-app -->
+
+
+
+  <script>
 
 /* ══════════════════════════════════════
    DATOS INICIALES
@@ -1453,11 +1544,15 @@ let MAESTROS = {
 
 const CINTURONES = {
   blanco:  { label:'Blanco',   bg:'#fff',    border:'1px solid #ccc', text:'#555' },
+  puntaamarilla:{ label:'Punta Amarilla', bg:'#FFD750', border:'none', text:'#fff' },
   amarillo:{ label:'Amarillo', bg:'#FFD700', border:'none', text:'#7a5c00' },
-  naranja: { label:'Naranja',  bg:'#ff8c00', border:'none', text:'#fff' },
+  puntaverde: { label:'Punta Verde',   bg:'#90EE90', border:'none', text:'#fff' },
   verde:   { label:'Verde',    bg:'#228B22', border:'none', text:'#fff' },
+  puntaazul: { label:'Punta Azul',   bg:'#0000CD', border:'none', text:'#fff' },
   azul:    { label:'Azul',     bg:'#00008B', border:'none', text:'#fff' },
+  puntaroja: { label:'Punta Roja',   bg:'#FF6347', border:'none', text:'#fff' },
   rojo:    { label:'Rojo',     bg:'#8B0000', border:'none', text:'#fff' },
+  puntanegra: { label:'Punta Negra',   bg:'#555',    border:'none', text:'#fff' },
   negro:   { label:'Negro',    bg:'#111',    border:'none', text:'#fff' }
 }
 
@@ -1474,8 +1569,32 @@ const LOGROS = [
 ══════════════════════════════════════ */
 let usuarioActual = null
 let esAdmin = false
-let alumnos = []
-let asistencias = []
+
+// 1. Alumnos de prueba distribuidos por sedes, salones y maestros
+let alumnos = [
+  { id: 'a1', nombre: 'Juan Pérez', sede: 'Sede Central', cinturon: 'blanco', fecha: '2026-01-10', salon: 'Lun/Mié/Vie', maestro: 'carlos.rodriguez' },
+  { id: 'a2', nombre: 'Sofía Rodríguez', sede: 'Sede Central', cinturon: 'amarillo', fecha: '2025-11-15', salon: 'Lun/Mié/Vie', maestro: 'carlos.rodriguez' },
+  { id: 'a3', nombre: 'Mateo Gómez', sede: 'Sede Norte', cinturon: 'verde', fecha: '2025-05-20', salon: 'Mar/Jue/Sáb', maestro: 'marcela.lopez' },
+  { id: 'a4', nombre: 'Valentina Flores', sede: 'Sede Sur', cinturon: 'azul', fecha: '2024-08-12', salon: 'Sáb/Dom', maestro: 'julian.perez' },
+  { id: 'a5', nombre: 'Lucas Martínez', sede: 'Sede Cosquín', cinturon: 'rojo', fecha: '2024-03-05', salon: 'Lun/Mié/Vie', maestro: 'ana.gonzalez' },
+  { id: 'a6', nombre: 'Camila Benítez', sede: 'Sede Central', cinturon: 'negro', fecha: '2023-01-22', salon: 'Mar/Jue/Sáb', maestro: 'carlos.rodriguez' }
+]
+
+// 2. Historial de asistencias pasadas para alimentar los gráficos de la pantalla de Admin
+let asistencias = [
+  // Fecha 19 de Mayo
+  { alumnoId: 'a1', fecha: '2026-05-19', salon: 'Lun/Mié/Vie', estado: 'P', maestro: 'carlos.rodriguez' },
+  { alumnoId: 'a2', fecha: '2026-05-19', salon: 'Lun/Mié/Vie', estado: 'P', maestro: 'carlos.rodriguez' },
+  { alumnoId: 'a5', fecha: '2026-05-19', salon: 'Lun/Mié/Vie', estado: 'A', maestro: 'ana.gonzalez' },
+  // Fecha 21 de Mayo
+  { alumnoId: 'a1', fecha: '2026-05-21', salon: 'Lun/Mié/Vie', estado: 'P', maestro: 'carlos.rodriguez' },
+  { alumnoId: 'a2', fecha: '2026-05-21', salon: 'Lun/Mié/Vie', estado: 'A', maestro: 'carlos.rodriguez' },
+  { alumnoId: 'a5', fecha: '2026-05-21', salon: 'Lun/Mié/Vie', estado: 'P', maestro: 'ana.gonzalez' },
+  // Fecha 22 de Mayo (Clases de Martes/Jueves/Sábado)
+  { alumnoId: 'a3', fecha: '2026-05-22', salon: 'Mar/Jue/Sáb', estado: 'P', maestro: 'marcela.lopez' },
+  { alumnoId: 'a6', fecha: '2026-05-22', salon: 'Mar/Jue/Sáb', estado: 'P', maestro: 'carlos.rodriguez' }
+]
+
 let asistTemporal = {}
 let charts = {}
 
@@ -1491,39 +1610,68 @@ function togglePass(){
   i.type=oculto?'text':'password'
   ic.className=oculto?'ti ti-eye-off':'ti ti-eye'
 }
-
-function intentarLogin(){
-  const u=document.getElementById('login-user').value.trim().toLowerCase()
-  const p=document.getElementById('login-pass').value
-  const err=document.getElementById('login-err')
-  if(!u||!p){err.textContent='Completá usuario y contraseña.';return}
-
-  if(u===ADMIN.usuario && p===ADMIN.pass){
-    usuarioActual={usuario:u, nombre:ADMIN.nombre, rol:ADMIN.rol}
-    esAdmin=true
-  } else if(MAESTROS[u] && MAESTROS[u].pass===p){
-    usuarioActual={usuario:u, nombre:MAESTROS[u].nombre, rol:MAESTROS[u].sede}
-    esAdmin=false
-  } else {
-    err.textContent='Usuario o contraseña incorrectos.'
-    document.getElementById('login-pass').value=''
-    return
-  }
-  err.textContent=''
-  iniciarApp()
+// Funciones de apertura y cierre del menú de acceso
+function abrirModalLogin() {
+  document.getElementById('modal-login-flotante').style.display = 'flex';
+  document.getElementById('login-user').focus();
 }
 
-document.getElementById('login-pass').addEventListener('keydown',e=>{if(e.key==='Enter')intentarLogin()})
+function cerrarModalLogin() {
+  document.getElementById('modal-login-flotante').style.display = 'none';
+  document.getElementById('login-err').textContent = '';
+  document.getElementById('login-user').value = '';
+  document.getElementById('login-pass').value = '';
+}
+
+function validarLogin(e){
+  if(e && e.preventDefault) e.preventDefault();
+  const user = (document.getElementById('login-user').value||'').trim().toLowerCase()
+  const pass = (document.getElementById('login-pass').value||'').trim()
+  const err  = document.getElementById('login-err')
+  if(!user||!pass){ err.textContent='Completá usuario y contraseña.'; return }
+
+  if(user===ADMIN.usuario && pass===ADMIN.pass){
+    usuarioActual = { usuario: ADMIN.usuario, nombre: ADMIN.nombre, rol: ADMIN.rol }
+    esAdmin = true
+    cerrarModalLogin()
+    mostrarBotonesApp()
+    iniciarApp()
+    return
+  }
+  const m = MAESTROS[user]
+  if(m && m.pass===pass){
+    usuarioActual = { usuario: user, nombre: m.nombre, rol: 'Maestro — '+m.sede }
+    esAdmin = false
+    cerrarModalLogin()
+    mostrarBotonesApp()
+    iniciarApp()
+    return
+  }
+  err.textContent = 'Usuario o contraseña incorrectos.'
+}
+
+function mostrarBotonesApp(){
+  document.getElementById('btn-acceso-menu').style.display = 'none';
+  document.getElementById('btn-salir-top').style.display   = 'inline-flex';
+  document.getElementById('btn-gestion-top').style.display = 'inline-flex';
+}
+
+function volverAGestion(){
+  cambiarPantalla('s-app');
+}
 
 function cerrarSesion(){
-  usuarioActual=null; esAdmin=false
-  alumnos=[]; asistencias=[]; asistTemporal={}
-  Object.values(charts).forEach(c=>c.destroy())
-  charts={}
-  document.getElementById('login-user').value=''
-  document.getElementById('login-pass').value=''
-  document.getElementById('login-err').textContent=''
-  cambiarPantalla('s-login')
+  usuarioActual = null; esAdmin = false; asistTemporal = {};
+  // Ocultar pantalla app y volver al contenido público
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('visible'));
+  document.querySelector('.contenido').style.display='';
+  // Resetear botones topbar
+  document.getElementById('btn-acceso-menu').style.display = 'inline-flex';
+  document.getElementById('btn-salir-top').style.display = 'none';
+  document.getElementById('btn-gestion-top').style.display = 'none';
+  // Destruir gráficos
+  Object.values(charts).forEach(c => c.destroy());
+  charts = {};
 }
 
 /* ══════════════════════════════════════
@@ -1557,6 +1705,8 @@ function iniciarApp(){
   document.getElementById('filtros-alumnos').style.display=esAdmin?'flex':'none'
 
   cambiarPantalla('s-app')
+  // Ocultar contenido público
+  document.querySelector('.contenido').style.display='none'
   document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('visible'))
   document.getElementById('tab-'+tabsDef[0].id).classList.add('visible')
 
@@ -1637,7 +1787,7 @@ function renderStats(){
 
 /* ── Dashboard stats (admin) ── */
 function renderDashStats(){
-  const sedes=['Carlos Paz','Malagueño','Tanti/Siquiman','Sede Bialte Masse']
+  const sedes=['Carlos Paz','Malagueño','Tanti', 'Siquiman','Sede Bialet Masse', 'Sede La Falda']
   const totalM=Object.keys(MAESTROS).length
   document.getElementById('dash-stats').innerHTML=`
     <div class="stat-card"><div class="sc-label">Total alumnos</div><div class="sc-valor">${alumnos.length}</div><div class="sc-sub">toda la escuela</div></div>
@@ -1651,9 +1801,9 @@ function renderDashStats(){
    GRÁFICOS (admin)
 ══════════════════════════════════════ */
 function renderGraficos(){
-  const sedes=['Carlos Paz','Malagueño','Tanti/Siquiman','Bialte Masse']
-  const cintNames=['blanco','amarillo','naranja','verde','azul','rojo','negro']
-  const cintColors=['#e0e0e0','#FFD700','#ff8c00','#228B22','#00008B','#8B0000','#111']
+  const sedes=['Carlos Paz','Malagueño','Tanti', 'Siquiman','Bialet Masse', 'La Falda']
+  const cintNames=['blanco','amarillo','verde','azul','rojo','negro']
+  const cintColors=['#e0e0e0','#FFD700','#228B22','#00008B','#8B0000','#111']
 
   // Alumnos por sede
   if(charts['sedes']) charts['sedes'].destroy()
@@ -1967,7 +2117,38 @@ function renderLogros(){
 }
 
 
-    
+ function toggleMenu() {
+      document.getElementById('sidebar').classList.toggle('visible');
+      document.getElementById('overlay').classList.toggle('visible');
+      document.getElementById('btnHam').classList.toggle('abierto');
+    }
+
+    function cerrarMenu() {
+      document.getElementById('sidebar').classList.remove('visible');
+      document.getElementById('overlay').classList.remove('visible');
+      document.getElementById('btnHam').classList.remove('abierto');
+    }
+
+    function ir(idSeccion, nombreSeccion, boton) {
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
+      document.querySelectorAll('.menu-item').forEach(b => b.classList.remove('activo'));
+      
+      document.getElementById(idSeccion).classList.add('visible');
+      if(boton) boton.classList.add('activo');
+      
+      document.getElementById('topbarSeccion').innerText = nombreSeccion;
+      cerrarMenu();
+    }
+
+    function toggleFaq(btn) {
+      const item = btn.parentElement;
+      item.classList.toggle('abierto');
+    }
+
+    function irALogin() {
+      abrirModalLogin();
+    }
+
   </script>
 </body>
 </html>
