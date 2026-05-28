@@ -1570,8 +1570,8 @@ const LOGROS = [
 let usuarioActual = null
 let esAdmin = false
 
-// 1. Alumnos de prueba distribuidos por sedes, salones y maestros
-let alumnos = [
+// 1. Alumnos: carga desde localStorage; si no hay nada guardado, usa los datos de prueba
+let alumnos = JSON.parse(localStorage.getItem('alumnos')) || [
   { id: 'a1', nombre: 'Juan Pérez', sede: 'Sede Central', cinturon: 'blanco', fecha: '2026-01-10', salon: 'Lun/Mié/Vie', maestro: 'carlos.rodriguez' },
   { id: 'a2', nombre: 'Sofía Rodríguez', sede: 'Sede Central', cinturon: 'amarillo', fecha: '2025-11-15', salon: 'Lun/Mié/Vie', maestro: 'carlos.rodriguez' },
   { id: 'a3', nombre: 'Mateo Gómez', sede: 'Sede Norte', cinturon: 'verde', fecha: '2025-05-20', salon: 'Mar/Jue/Sáb', maestro: 'marcela.lopez' },
@@ -1580,8 +1580,8 @@ let alumnos = [
   { id: 'a6', nombre: 'Camila Benítez', sede: 'Sede Central', cinturon: 'negro', fecha: '2023-01-22', salon: 'Mar/Jue/Sáb', maestro: 'carlos.rodriguez' }
 ]
 
-// 2. Historial de asistencias pasadas para alimentar los gráficos de la pantalla de Admin
-let asistencias = [
+// 2. Asistencias: carga desde localStorage; si no hay nada guardado, usa el historial de prueba
+let asistencias = JSON.parse(localStorage.getItem('asistencias')) || [
   // Fecha 19 de Mayo
   { alumnoId: 'a1', fecha: '2026-05-19', salon: 'Lun/Mié/Vie', estado: 'P', maestro: 'carlos.rodriguez' },
   { alumnoId: 'a2', fecha: '2026-05-19', salon: 'Lun/Mié/Vie', estado: 'P', maestro: 'carlos.rodriguez' },
@@ -1597,6 +1597,14 @@ let asistencias = [
 
 let asistTemporal = {}
 let charts = {}
+
+/* ══════════════════════════════════════
+   PERSISTENCIA — localStorage
+══════════════════════════════════════ */
+function guardarEnLocalStorage() {
+  localStorage.setItem('alumnos',     JSON.stringify(alumnos))
+  localStorage.setItem('asistencias', JSON.stringify(asistencias))
+}
 
 document.getElementById('asist-fecha').value = new Date().toISOString().split('T')[0]
 document.getElementById('al-fecha').value    = new Date().toISOString().split('T')[0]
@@ -1946,6 +1954,7 @@ function agregarAlumno(){
     maestro:usuarioActual.usuario
   })
   document.getElementById('al-nombre').value=''
+  guardarEnLocalStorage()
   renderTodo()
   if(esAdmin) setTimeout(renderGraficos,50)
 }
@@ -1954,6 +1963,7 @@ function eliminarAlumno(id){
   if(!confirm('¿Eliminar este alumno y sus asistencias?'))return
   alumnos=alumnos.filter(a=>a.id!==id)
   asistencias=asistencias.filter(a=>a.alumnoId!==id)
+  guardarEnLocalStorage()
   renderTodo()
   if(esAdmin) setTimeout(renderGraficos,50)
 }
@@ -1978,6 +1988,7 @@ function guardarEdicion(){
   a.fecha=document.getElementById('edit-fecha').value
   a.salon=document.getElementById('edit-salon').value
   cerrarModal('modal-alumno')
+  guardarEnLocalStorage()
   renderTodo()
 }
 
@@ -2055,6 +2066,7 @@ function guardarAsistencia(){
     else asistencias.push({alumnoId:id,fecha,salon,estado:asistTemporal[id],maestro:usuarioActual.usuario})
   })
   asistTemporal={}
+  guardarEnLocalStorage()
   renderAsistencia(); renderTablaAlumnos(); renderLogros(); renderStats()
   if(esAdmin){ renderDashStats(); setTimeout(renderGraficos,50) }
   const al=document.getElementById('alerta-ok')
