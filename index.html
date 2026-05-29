@@ -1570,30 +1570,48 @@ const LOGROS = [
 let usuarioActual = null
 let esAdmin = false
 
-// 1. Alumnos: carga desde localStorage; si no hay nada guardado, usa los datos de prueba
-let alumnos = JSON.parse(localStorage.getItem('alumnos')) || [
-  { id: 'a1', nombre: 'Juan Pérez', sede: 'Sede Central', cinturon: 'blanco', fecha: '2026-01-10', salon: 'Lun/Mié/Vie', maestro: 'carlos.rodriguez' },
-  { id: 'a2', nombre: 'Sofía Rodríguez', sede: 'Sede Central', cinturon: 'amarillo', fecha: '2025-11-15', salon: 'Lun/Mié/Vie', maestro: 'carlos.rodriguez' },
-  { id: 'a3', nombre: 'Mateo Gómez', sede: 'Sede Norte', cinturon: 'verde', fecha: '2025-05-20', salon: 'Mar/Jue/Sáb', maestro: 'marcela.lopez' },
-  { id: 'a4', nombre: 'Valentina Flores', sede: 'Sede Sur', cinturon: 'azul', fecha: '2024-08-12', salon: 'Sáb/Dom', maestro: 'julian.perez' },
-  { id: 'a5', nombre: 'Lucas Martínez', sede: 'Sede Cosquín', cinturon: 'rojo', fecha: '2024-03-05', salon: 'Lun/Mié/Vie', maestro: 'ana.gonzalez' },
-  { id: 'a6', nombre: 'Camila Benítez', sede: 'Sede Central', cinturon: 'negro', fecha: '2023-01-22', salon: 'Mar/Jue/Sáb', maestro: 'carlos.rodriguez' }
+/* ══════════════════════════════════════
+   CARGA INICIAL DESDE localStorage
+   — La clave debe existir Y ser un array
+     con al menos un elemento para ser
+     considerada válida. Cualquier otro
+     caso (ausente, null, corrupto, [])
+     cae al fallback de datos de prueba.
+══════════════════════════════════════ */
+function cargarDesdeStorage(clave, fallback) {
+  try {
+    const raw = localStorage.getItem(clave)
+    if (raw === null) return fallback          // clave nunca guardada
+    const parsed = JSON.parse(raw)
+    if (Array.isArray(parsed) && parsed.length > 0) return parsed  // ✅ dato válido
+    return fallback                            // array vacío o valor inesperado
+  } catch (e) {
+    return fallback                            // JSON corrupto
+  }
+}
+
+const ALUMNOS_DEFECTO = [
+  { id: 'a1', nombre: 'Juan Pérez',        sede: 'Sede Central',  cinturon: 'blanco',   fecha: '2026-01-10', salon: 'Lun/Mié/Vie', maestro: 'carlos.rodriguez' },
+  { id: 'a2', nombre: 'Sofía Rodríguez',   sede: 'Sede Central',  cinturon: 'amarillo', fecha: '2025-11-15', salon: 'Lun/Mié/Vie', maestro: 'carlos.rodriguez' },
+  { id: 'a3', nombre: 'Mateo Gómez',       sede: 'Sede Norte',    cinturon: 'verde',    fecha: '2025-05-20', salon: 'Mar/Jue/Sáb', maestro: 'marcela.lopez'    },
+  { id: 'a4', nombre: 'Valentina Flores',  sede: 'Sede Sur',      cinturon: 'azul',     fecha: '2024-08-12', salon: 'Sáb/Dom',     maestro: 'julian.perez'     },
+  { id: 'a5', nombre: 'Lucas Martínez',    sede: 'Sede Cosquín',  cinturon: 'rojo',     fecha: '2024-03-05', salon: 'Lun/Mié/Vie', maestro: 'ana.gonzalez'     },
+  { id: 'a6', nombre: 'Camila Benítez',    sede: 'Sede Central',  cinturon: 'negro',    fecha: '2023-01-22', salon: 'Mar/Jue/Sáb', maestro: 'carlos.rodriguez' }
 ]
 
-// 2. Asistencias: carga desde localStorage; si no hay nada guardado, usa el historial de prueba
-let asistencias = JSON.parse(localStorage.getItem('asistencias')) || [
-  // Fecha 19 de Mayo
+const ASISTENCIAS_DEFECTO = [
   { alumnoId: 'a1', fecha: '2026-05-19', salon: 'Lun/Mié/Vie', estado: 'P', maestro: 'carlos.rodriguez' },
   { alumnoId: 'a2', fecha: '2026-05-19', salon: 'Lun/Mié/Vie', estado: 'P', maestro: 'carlos.rodriguez' },
-  { alumnoId: 'a5', fecha: '2026-05-19', salon: 'Lun/Mié/Vie', estado: 'A', maestro: 'ana.gonzalez' },
-  // Fecha 21 de Mayo
+  { alumnoId: 'a5', fecha: '2026-05-19', salon: 'Lun/Mié/Vie', estado: 'A', maestro: 'ana.gonzalez'     },
   { alumnoId: 'a1', fecha: '2026-05-21', salon: 'Lun/Mié/Vie', estado: 'P', maestro: 'carlos.rodriguez' },
   { alumnoId: 'a2', fecha: '2026-05-21', salon: 'Lun/Mié/Vie', estado: 'A', maestro: 'carlos.rodriguez' },
-  { alumnoId: 'a5', fecha: '2026-05-21', salon: 'Lun/Mié/Vie', estado: 'P', maestro: 'ana.gonzalez' },
-  // Fecha 22 de Mayo (Clases de Martes/Jueves/Sábado)
-  { alumnoId: 'a3', fecha: '2026-05-22', salon: 'Mar/Jue/Sáb', estado: 'P', maestro: 'marcela.lopez' },
+  { alumnoId: 'a5', fecha: '2026-05-21', salon: 'Lun/Mié/Vie', estado: 'P', maestro: 'ana.gonzalez'     },
+  { alumnoId: 'a3', fecha: '2026-05-22', salon: 'Mar/Jue/Sáb', estado: 'P', maestro: 'marcela.lopez'    },
   { alumnoId: 'a6', fecha: '2026-05-22', salon: 'Mar/Jue/Sáb', estado: 'P', maestro: 'carlos.rodriguez' }
 ]
+
+let alumnos     = cargarDesdeStorage('alumnos',     ALUMNOS_DEFECTO)
+let asistencias = cargarDesdeStorage('asistencias', ASISTENCIAS_DEFECTO)
 
 let asistTemporal = {}
 let charts = {}
