@@ -739,7 +739,7 @@
     <div class="sidebar-head">
       <img src="logo escuela.png" alt="Escudo Chul Hak San" class="logo-escudo">
       <div class="s-titulo">Escuela de Taekwondo Chuk Hak San</div>
-      <div class="s-sub">Villa Carlos Paz / Tanti / Siquiman / Malagueño / Bialet Masse</div>
+      <div class="s-sub">Villa Carlos Paz / Tanti / Siquiman / Malagueño / Bialet Masse / La Falda </div>
     </div>
     <div class="sidebar-menu">
       <button class="menu-item activo" onclick="ir('sedes','Nuestras Sedes',this)">
@@ -804,7 +804,7 @@
 
     <div class="section visible" id="sedes">
       <div class="hero-banner">
-        <div><h2>Nuestras Sedes</h2><p>4 escuelas en la región de Carlos Paz y Cosquín</p></div>
+        <div><h2>Nuestras Sedes</h2><p></p></div>
         <span class="h-emoji">🏛️</span>
       </div>
       <div class="grid4">
@@ -1561,7 +1561,8 @@ const LOGROS = [
   { id:'l2', nombre:'Constante',          desc:'15 clases asistidas',  clases:15,  icono:'ti-flame'  },
   { id:'l3', nombre:'Dedicado',           desc:'30 clases asistidas',  clases:30,  icono:'ti-star'   },
   { id:'l4', nombre:'Guerrero',           desc:'50 clases asistidas',  clases:50,  icono:'ti-sword'  },
-  { id:'l5', nombre:'Proximo Maestro', desc:'100 clases asistidas', clases:100, icono:'ti-trophy' }
+  { id:'l5', nombre:'Proximo Maestro', desc:'100 clases asistidas', clases:100, icono:'ti-trophy' },
+   { id:'l5', nombre:'Ejemplo a seguir', desc:'200 clases asistidas', clases:200, icono:'ti-trophy' }
 ]
 
 /* ══════════════════════════════════════
@@ -1771,6 +1772,7 @@ function pctAlumno(id){
   return t?Math.round((clasesAlumno(id)/t)*100):0
 }
 function rangoAlumno(cl){
+  if(cl>=200)return{label:'Ejemplo a seguir',bg:'#E6F1FB',color:'#0847'}
   if(cl>=100)return{label:'Proximo Maestro',bg:'#E6F1FB',color:'#0C447C'}
   if(cl>=50) return{label:'Guerrero',           bg:'#FAEEDA',color:'#633806'}
   if(cl>=30) return{label:'Dedicado',           bg:'#EAF3DE',color:'#3B6D11'}
@@ -1869,7 +1871,7 @@ function renderGraficos(){
 
   // Rangos
   if(charts['rangos']) charts['rangos'].destroy()
-  const rangosLabels=['Iniciando','Primer paso','Constante','Dedicado','Guerrero','Proximo Maestro']
+  const rangosLabels=['Iniciando','Primer paso','Constante','Dedicado','Guerrero','Proximo Maestro', 'Ejemplo a seguir']
   const rangosData=rangosLabels.map(r=>alumnos.filter(a=>rangoAlumno(clasesAlumno(a.id)).label===r).length)
   const ctxR=document.getElementById('chart-rangos')
   if(ctxR) charts['rangos']=new Chart(ctxR,{
